@@ -1,5 +1,4 @@
 import * as Yup from "yup";
-import { ICreateComment } from "@/src/services";
 import { genericValidationSchema } from "@/src/validation";
 
 export const reviewSchema 

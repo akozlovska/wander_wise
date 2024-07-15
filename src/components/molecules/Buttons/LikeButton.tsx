@@ -40,7 +40,7 @@ const LikeButton: React.FC<LikeButtonProps>
       likes.current +=1;
       like(cardId);
     }
-  }, [isCardLikedByUser, cardId]);
+  }, [isCardLikedByUser, cardId, like, removeLike]);
 
   return (
     <IconButton

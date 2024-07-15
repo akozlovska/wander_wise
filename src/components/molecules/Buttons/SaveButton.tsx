@@ -31,7 +31,7 @@ const SaveButton: React.FC<SaveButtonProps> = ({ cardId }) => {
     isCardSavedByUser
       ? removeFromSaved(cardId)
       : save(cardId);
-  }, [isCardSavedByUser, cardId]);
+  }, [isCardSavedByUser, cardId, save, removeFromSaved]);
 
   return (
     <PrimaryButton

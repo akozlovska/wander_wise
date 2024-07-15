@@ -38,7 +38,7 @@ const ProfileInfo: React.FC = () => {
       onError: (err) => setErrorMessage(err),
       onSuccess: () => push(Routes.HOME),
     });
-  }, []);
+  }, [mutate, push, setErrorMessage]);
 
   return (
     <article

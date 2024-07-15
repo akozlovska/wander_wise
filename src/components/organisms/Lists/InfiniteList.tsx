@@ -54,6 +54,7 @@ const InfiniteList: React.FC<InfiniteListProps>
         pageContainerRef.current.scrollTop = offsetTop;
       }
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const observerElem = useRef<HTMLDivElement>(null);
@@ -79,7 +80,7 @@ const InfiniteList: React.FC<InfiniteListProps>
         observer.unobserve(observedElement);
       }
     };
-  }, [pages, isLastPage, isFetchingNextPage]);
+  }, [pages, isLastPage, isFetchingNextPage, handleNextPage]);
 
   if (!pages.length) {
     return <CardsSkeleton />;

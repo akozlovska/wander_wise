@@ -12,6 +12,7 @@ export const AuthProvider = ({children}: PropsWithChildren) => {
     refresh(undefined, {
       onSettled: () => setIsInitialAuthorizing(false),
     });
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
     
   return (

@@ -17,5 +17,6 @@ export const selectLikedCards = (collections: ICollection[]) => {
 
 export const selectOtherCollections = (collections: ICollection[]) => {
   return collections.filter(collection => 
-      !['Saved cards', 'Liked cards', 'Created cards'].includes(collection.name));
+    !['Saved cards', 'Liked cards', 'Created cards']
+      .includes(collection.name));
 };

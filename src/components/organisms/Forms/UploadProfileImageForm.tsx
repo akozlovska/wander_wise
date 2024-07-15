@@ -57,7 +57,7 @@ const UploadProfileImageForm: React.FC<UploadProfileImageFormProps>
       onError: (e) => setErrorMessage(e), 
       onSuccess: () => setImageUrl('/user-default.webp') 
     });
-  }, []);
+  }, [mutate, setErrorMessage]);
 
   const { user } = useUser();
   const [imageUrl, setImageUrl] = useState(

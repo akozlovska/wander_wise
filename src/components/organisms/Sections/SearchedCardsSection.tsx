@@ -39,6 +39,7 @@ const SearchedCardsSection: React.FC<SearchedCardsSectionProps>
       setLastPage(page - 1);
       setPage(curr => curr - 1);
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isFetchNextPageError]);
 
   const handleNextPage = () => {
