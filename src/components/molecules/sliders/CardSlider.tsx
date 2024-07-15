@@ -38,6 +38,7 @@ const CardSlider: React.FC<CardSliderProps> = ({ slides, activeSlide }) => {
         scrollbar={{ draggable: true }}
         loop={slides.length > 1}
         style={{
+          // @ts-ignore
           "--swiper-pagination-color": "#F9F9F9",
           "--swiper-pagination-bullet-inactive-color": "#C1C1C1",
           "--swiper-pagination-bullet-inactive-opacity": "1",
