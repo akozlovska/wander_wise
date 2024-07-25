@@ -42,7 +42,7 @@ const ProfileEditPage = () => {
     <StandardPageLayout>
       <article 
         className="flex w-[670px] flex-col items-center gap-6 
-        self-center rounded-3xl bg-white px-10 py-12"
+        self-center rounded-4xl bg-white px-10 py-12"
       >
         <Heading2 
           text="Personal information" 
@@ -91,8 +91,10 @@ const ProfileEditPage = () => {
         </div>
       </article>
 
-      <article className="flex w-[670px] flex-col items-center gap-6 
-      self-center rounded-3xl bg-white px-10 py-12">
+      <article 
+        className="flex w-[670px] flex-col items-center gap-6 
+        self-center rounded-4xl bg-white px-10 py-12"
+      >
         <Heading2 
           text="Social networks" 
           font="semibold" 

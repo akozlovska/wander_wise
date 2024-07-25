@@ -1,3 +1,5 @@
+import { twMerge } from "tailwind-merge";
+
 interface TextMediumProps {
   text: string;
   classes?: string;
@@ -5,7 +7,11 @@ interface TextMediumProps {
 }
 
 const TextMedium: React.FC<TextMediumProps> = ({ text, classes, font }) => {
-  return <p className={`font-${font} text-sm text-black ${classes}`}>{text}</p>;
+  return (
+    <p className={twMerge(`font-${font} text-sm text-black`, classes)}>
+      {text}
+    </p>
+  );
 };
 
 export default TextMedium;

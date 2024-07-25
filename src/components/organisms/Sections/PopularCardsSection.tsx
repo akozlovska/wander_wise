@@ -4,7 +4,7 @@
 import { memo, useEffect, useRef, useState } from "react";
 import { usePopularCards } from "@/src/queries";
 import { ISearchCardResponse, TripsPageView } from "@/src/services";
-import { Heading, Loader, Icons } from "@/src/components/atoms";
+import { Heading4, Loader, Icons } from "@/src/components/atoms";
 import { Gallery, InfiniteList } from "@/src/components/organisms";
 import { LoadingStateWrapper } from "@/src/components/templates";
 import { IconButton } from "@/src/components/molecules";
@@ -84,10 +84,10 @@ const PopularCardsSection: React.FC<PopularCardsSectionProps> = ({ view }) => {
     <LoadingStateWrapper
       isEmpty={isShowEmpty}
       emptyFallbackComponent={
-        <Heading 
+        <Heading4 
           text="No cards found 😢" 
-          font="normal"
-          classes="m-auto"
+          font="medium"
+          classes="m-auto text-gray-80"
         />
       }
       isLoading={isShowLoader}

@@ -30,8 +30,7 @@ const TextAreaInput = <T extends FieldValues>({
     >
       {(field) => (
         <div className={twMerge(
-          `h-64 border border-gray-50
-          rounded-lg overflow-hidden
+          `h-64 border border-gray-50 rounded-lg overflow-hidden
           transition-colors px-4 py-3`,
           errorText && 'border-error',
         )}>

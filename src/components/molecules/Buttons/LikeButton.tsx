@@ -1,6 +1,6 @@
 'use client';
 
-import { memo, useCallback, useMemo, useRef } from "react";
+import { memo, useCallback, useEffect, useMemo, useState } from "react";
 import { 
   useGetUserCollections,
   useLikeCard, 
@@ -23,7 +23,8 @@ const LikeButton: React.FC<LikeButtonProps>
   const { user } = useUser();
   const { mutate: like } = useLikeCard();
   const { mutate: removeLike } = useRemoveLikeFromCard();
-  const likes = useRef(cardLikes);
+  const [likes, setLikes] = useState(cardLikes);
+  const [isLiked, setIsLiked] = useState(false);
 
   const { 
     data: likedCollection, 
@@ -32,20 +33,43 @@ const LikeButton: React.FC<LikeButtonProps>
     likedCollection?.cardDtos.some(likedCard => likedCard.id === cardId), 
   [likedCollection, cardId]);
 
-  const handleLikeClick = useCallback(() => {
-    if (isCardLikedByUser) {
-      removeLike(cardId);
-      likes.current -= 1;
-    } else {
-      likes.current +=1;
-      like(cardId);
+  useEffect(() => {
+    if (likedCollection) {
+      setIsLiked(!!isCardLikedByUser);
     }
-  }, [isCardLikedByUser, cardId, like, removeLike]);
+  }, [likedCollection, isCardLikedByUser]);
+
+  const handleLikeClick = useCallback(() => {
+    const previousLikes = likes;
+    const previousIsLiked = isLiked;
+
+    if (isLiked) {
+      setLikes(curr => Math.max(0, curr - 1));
+      setIsLiked(false);
+
+      removeLike(cardId, {
+        onError: () => {
+          setLikes(previousLikes);
+          setIsLiked(previousIsLiked);
+        }
+      });
+    } else {
+      setLikes(curr => curr + 1);
+      setIsLiked(true);
+
+      like(cardId, {
+        onError: () => {
+          setLikes(previousLikes);
+          setIsLiked(previousIsLiked);
+        }
+      });
+    }
+  }, [isLiked, likes, cardId, like, removeLike]);
 
   return (
     <IconButton
-      icon={isCardLikedByUser ? <Icons.heartFilled /> : <Icons.heart />}
-      text={likes.current?.toString()}
+      icon={isLiked ? <Icons.heartFilled /> : <Icons.heart />}
+      text={likes.toString()}
       classes={classes}
       onClick={handleLikeClick}
       disabled={!user}

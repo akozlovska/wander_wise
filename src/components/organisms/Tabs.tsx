@@ -33,7 +33,7 @@ const Tabs: React.FC<TabsProps> = ({ tabs, location }) => {
         {Object.keys(tabs).map((tab) => (
           <li
             className={twMerge(
-              "flex gap-2 rounded-lg relative",
+              "flex gap-2 relative",
               location === 'Page' && 'p-2',
               active === tab 
               && `after:bg-gray-800 after:h-1 after:w-full after:absolute 
@@ -68,7 +68,7 @@ const Tabs: React.FC<TabsProps> = ({ tabs, location }) => {
       <div 
         className={twMerge(
           'overflow-y-scroll', 
-          location === 'Card' && 'line-clamp-4'
+          location === 'Card' && 'overflow-y-hidden line-clamp-4'
         )} 
       >
         {active === 'Description' && (

@@ -21,7 +21,7 @@ const CreateCardPage = () => {
   return (
     <StandardPageLayout>
       <article className="flex w-[670px] flex-col items-center gap-6 
-      self-center rounded-3xl bg-white px-10 py-12">
+      self-center rounded-4xl bg-white px-10 py-12">
         <Heading2 
           text="Create a new card" 
           font="semibold" 
@@ -35,7 +35,7 @@ const CreateCardPage = () => {
         <article 
           ref={scrollRef}
           className="flex w-[670px] flex-col items-center gap-6 
-          self-center rounded-3xl bg-white px-10 py-12">
+          self-center rounded-4xl bg-white px-10 py-12">
           <Heading2 
             text="Upload images for your new card" 
             font="semibold" 

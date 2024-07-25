@@ -63,13 +63,13 @@ const CollectionPage = () => {
               <IconButton 
                 text="Rename collection" 
                 icon={<Icons.edit />} 
-                classes="border border-black rounded-3xl"
+                classes="border border-black rounded-full"
                 onClick={() => setIsRenameCollectionModal(true)}
               />
               <IconButton 
                 text="Delete collection" 
                 icon={<Icons.delete />} 
-                classes="border border-error text-error rounded-3xl"
+                classes="border border-error text-error rounded-full"
                 onClick={() => setIsDeleteCollectionModal(true)}
               />
             </div>

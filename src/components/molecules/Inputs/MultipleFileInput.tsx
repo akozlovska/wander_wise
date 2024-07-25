@@ -75,7 +75,8 @@ const MultipleFileInput = <T extends FieldValues>({
           {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
           <label 
             htmlFor={name} 
-            className="relative flex h-64 w-full overflow-hidden rounded-xl"
+            className="relative flex w-full overflow-hidden 
+            rounded-2xl pb-[60%]"
           >
             <ImageInputPlaceholder 
               image={field.value[field.value.length - 1]} 

@@ -21,7 +21,7 @@ const CollectionsPage = () => {
   return (
     <StandardPageLayout>
       <article className="flex w-[670px] flex-col items-center gap-6 
-      self-center rounded-3xl bg-white px-10 py-12">
+      self-center rounded-4xl bg-white px-10 py-12">
         <div className="flex w-full items-center justify-between">
           <Heading3 
             text="My collections" 

@@ -22,7 +22,7 @@ const TripSCard: React.FC<TripSCardProps> = ({ card }) => {
 
       <div 
         className="absolute inset-x-2 bottom-3 
-        rounded-full bg-gray-80 px-6 py-2"
+        rounded-2xl bg-gray-80 px-6 py-2"
       >
         <TextMedium 
           text={card.name} 

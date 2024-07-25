@@ -9,6 +9,7 @@ import {
   FieldValues,
   Path,
 } from "react-hook-form";
+import { motion } from "framer-motion";
 import { Icons, TextMedium } from "@/src/components/atoms";
 import { InputControllerWrapper, IconButton } from "@/src/components/molecules";
   
@@ -58,8 +59,8 @@ const ListInput = <T extends FieldValues>({
             className={twMerge(
               `border border-gray-50 bg-white grow placeholder:text-gray-50
               text-black flex w-full items-center
-              justify-center text-base rounded-md
-              transition-colors focus:outline-none px-4 py-3`,
+              justify-center text-base rounded-lg
+              transition-colors focus:outline-none px-4 py-3 z-10`,
               errorText && 'border-error',
             )}
             onKeyDown={(e) => {
@@ -75,10 +76,12 @@ const ListInput = <T extends FieldValues>({
               className="z-10 mt-3 flex w-full flex-col gap-2"
             >
               {field.value.map((value: string) => (
-                <li
+                <motion.li
                   key={value}
-                  className="flex w-full items-start 
-                  gap-3 pr-4"
+                  initial={{ opacity: 0, y: -100 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.2 }}
+                  className="flex w-full items-start gap-3 pr-4"
                 >
                   <IconButton
                     icon={<Icons.close className="h-5 w-5" />}
@@ -88,11 +91,8 @@ const ListInput = <T extends FieldValues>({
                         field.value.filter((v: string) => v !== value))
                     }
                   />
-                  <div 
-                    className="my-1.5 h-2 w-2 shrink-0 rounded-full bg-gray-80" 
-                  />
                   <TextMedium text={value} font="normal" />
-                </li>
+                </motion.li>
               ))}
             </ul>
           )}

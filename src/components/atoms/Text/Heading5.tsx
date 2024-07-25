@@ -1,3 +1,5 @@
+import { twMerge } from "tailwind-merge";
+
 interface Heading5Props {
   text: string;
   classes?: string;
@@ -5,7 +7,11 @@ interface Heading5Props {
 }
 
 const Heading5: React.FC<Heading5Props> = ({ text, classes, font }) => {
-  return <h5 className={`font-${font} text-xl text-black ${classes}`}>{text}</h5>;
+  return (
+    <h5 className={twMerge(`font-${font} text-xl text-black`, classes)}>
+      {text}
+    </h5>
+  );
 };
 
 export default Heading5;

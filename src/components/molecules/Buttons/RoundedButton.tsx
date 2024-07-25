@@ -22,7 +22,7 @@ const RoundedButton: React.FC<RoundedButtonProps> = ({
       disabled={disabled}
       type={type}
       className={twMerge(
-        `w-full py-4 px-8 flex justify-center items-center rounded-full 
+        `w-full py-4 px-8 flex justify-center items-center rounded-4xl 
         transition-colors text-white text-base font-semibold border-2`, 
         classes, 
         style === 'dark' && `bg-black border-black hover:bg-gray-80 hover:border-gray-80

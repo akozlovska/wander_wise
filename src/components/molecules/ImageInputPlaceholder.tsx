@@ -36,7 +36,7 @@ const ImageInputPlaceholder: React.FC<ImageInputPlaceholderProps>
         />
       ) : (
         <div className="flex h-full w-full cursor-pointer
-       flex-col items-center justify-center gap-3 rounded-xl
+        flex-col items-center justify-center gap-3 rounded-2xl
         border border-dashed border-black bg-white focus:outline-none"
         >
           <Icons.download className="h-6 w-6" />

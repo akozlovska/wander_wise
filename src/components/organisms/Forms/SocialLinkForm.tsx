@@ -89,7 +89,7 @@ const SocialLinkForm: React.FC<SocialLinkFormProps> = ({ name }) => {
         
         <UnstyledButton 
           text={currentSocial ? "Update" : "Add"} 
-          classes="mt-10 h-[50px] px-3 rounded-md disabled:text-gray-50"
+          classes="mt-10 h-[50px] px-3 disabled:text-gray-50"
           disabled={isPending}
           type="submit"
         />

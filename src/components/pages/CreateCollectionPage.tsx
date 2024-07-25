@@ -7,7 +7,7 @@ const CreateCollectionPage = () => {
     <StandardPageLayout>
       <article 
         className="flex w-[670px] flex-col items-center gap-6 
-        self-center rounded-3xl bg-white px-10 py-12"
+        self-center rounded-4xl bg-white px-10 py-12"
       >
         <Heading3 
           text="Create new collection" 

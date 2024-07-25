@@ -19,17 +19,17 @@ const CardsSkeleton = () => {
           <article
             key={i}
             className="flex flex-col items-center gap-4 
-            rounded-3xl bg-white p-4"
+            rounded-4xl bg-white p-4"
           >
             <div 
-              className="w-full animate-pulse rounded-3xl bg-gray-30 pb-[68%]"
+              className="w-full animate-pulse rounded-3xl bg-gray-30 pb-[60%]"
             />
 
             <Divider />
 
             <div className="h-7 w-full animate-pulse rounded-2xl bg-gray-30" />
             <div className="h-6 w-full animate-pulse rounded-2xl bg-gray-30" />
-            <div className="h-14 w-full animate-pulse rounded-2xl bg-gray-30" />
+            <div className="h-14 w-full animate-pulse rounded-4xl bg-gray-30" />
           </article>
         ))}
       </div>

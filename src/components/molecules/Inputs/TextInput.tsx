@@ -45,7 +45,7 @@ const TextInput = <T extends FieldValues>({
             className={twMerge(
               `border border-gray-50 bg-white placeholder:text-gray-50
                 text-black flex w-full items-center
-                justify-center text-base rounded-md
+                justify-center text-base rounded-lg
                 transition-colors focus:outline-none px-4 py-3`,
               errorText && 'border-error',
             )}

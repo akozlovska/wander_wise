@@ -40,7 +40,7 @@ const ButtonCheckboxInput = <T extends FieldValues>({
             );
           }}
           className={twMerge(
-            `bg-gray-10 text-sm rounded-full py-2 px-3 
+            `bg-gray-10 text-sm rounded-4xl py-2 px-3 
             w-max transition-colors hover:bg-gray-20`,
             field.value.includes(value) && 'bg-gray-80 text-white'
           )}

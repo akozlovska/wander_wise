@@ -61,6 +61,10 @@ const config: Config = {
       },
       animation: {
         "loader-spin": "spin 3s linear infinite",
+      },
+
+      borderRadius: {
+        '4xl': '2.5rem',
       }
     },
   },

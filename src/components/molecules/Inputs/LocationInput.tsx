@@ -79,7 +79,7 @@ const LocationInput = <T extends FieldValues>({
             className={twMerge(
               `border border-gray-50 bg-white placeholder:text-gray-50
               text-black flex w-full items-center
-              justify-center text-base rounded-md
+              justify-center text-base rounded-lg
               transition-colors focus:outline-none px-4 py-3`,
               errorText && 'border-error',
             )}
@@ -87,19 +87,19 @@ const LocationInput = <T extends FieldValues>({
           {autocompleteSuggestions.length > 0 && (
             <div
               className="absolute top-full z-10 
-              w-full rounded-b-md bg-white shadow-lg"
+              w-full rounded-b-lg bg-white shadow-lg"
             >
               {autocompleteSuggestions.map((address, i) => (
                 <div
                   key={i}
-                  className="cursor-pointer px-4 py-2 text-sm hover:bg-gray-20"
+                  className="cursor-pointer px-4 py-2 text-sm hover:bg-gray-10"
                   onClick={() => {
                     field.onChange(address);
-                    setValue(address.formattedAddress || '');
+                    setValue(`${address.city}, ${address.country}`);
                     setAutocompleteSuggestions([]);
                   }}
                 >
-                  {address.formattedAddress}
+                  {`${address.city}, ${address.state}, ${address.country}`}
                 </div>
               ))}
             </div>

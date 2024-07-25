@@ -44,8 +44,8 @@ const DropdownInput = <T extends FieldValues>({
         className={twMerge(
           `border border-gray-50 bg-white grow relative
             text-black flex w-full items-center
-            rounded-md gap-4 placeholder:text-gray-50
-            transition-colors focus:outline-none px-4 py-3`,
+            rounded-lg gap-4 placeholder:text-gray-50
+            transition-colors focus:outline-none px-4 py-3 z-10`,
           errorText && 'border-error',
         )}
       >
@@ -54,13 +54,15 @@ const DropdownInput = <T extends FieldValues>({
             {selectedOptions.length ? (
               <>
                 {selectedOptions.slice(0,3).map((option: string) => (
-                  <div 
-                    key={option}
-                    className="text-regular w-max rounded-full bg-gray-80 px-3 
-                   py-2 text-sm text-white"
+                  <motion.div 
+                    key={option} 
+                    initial={{ opacity: 0, scale: 0 }}
+                    animate={{ opacity: 1, scale: 1 }} 
+                    className="text-regular w-max rounded-4xl bg-gray-80 px-3 
+                    py-2 text-sm text-white"
                   >
                     {option}
-                  </div>
+                  </motion.div>
                 ))}
               </>
             ) : (
@@ -93,17 +95,17 @@ const DropdownInput = <T extends FieldValues>({
       <AnimatePresence>
         {isExtended && (
           <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.1 }}
-            className="flex w-full 
-              flex-wrap gap-2 rounded-b-md border border-gray-50 
+            initial={{ opacity: 0, y: -100 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -100 }}
+            transition={{ duration: 0.2 }}
+            className="relative flex w-full
+              flex-wrap gap-2 rounded-b-lg border border-gray-50 
               bg-white px-4 py-3 shadow-lg"
           >
             {options.map((option: string) => (
               <ButtonCheckboxInput 
-                key={option} 
+                key={option}
                 value={option} 
                 name={name} 
                 control={control} 

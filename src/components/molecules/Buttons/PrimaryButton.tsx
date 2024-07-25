@@ -22,7 +22,7 @@ const PrimaryButton: React.FC<PrimaryButtonProps> = ({
       disabled={disabled}
       onClick={onClick}
       className={twMerge(
-        "w-full h-14 bg-yellow rounded-full flex",
+        "w-full h-14 bg-yellow rounded-4xl flex",
         "justify-center items-center text-base font-semibold",
         "transition-colors text-black",
         "hover:bg-[#E79200]", 

@@ -96,7 +96,7 @@ const SearchCardsForm: React.FC<Props> = ({ setFilterParams }) => {
     <form
       onSubmit={handleSubmit(onSubmit)}
       className="flex flex-col gap-8
-      border-r border-gray-30 bg-white pt-8"
+      border-r border-gray-30 bg-white py-8"
     >
       <div className="mx-10 flex flex-col">
         <TextBase text="Where are you now?*" font="semibold" />
@@ -209,7 +209,7 @@ const SearchCardsForm: React.FC<Props> = ({ setFilterParams }) => {
 
       <div 
         className="flex items-center
-        justify-center gap-4 px-10 py-6"
+        justify-center gap-4 px-10"
       >
         <RoundedButton
           text="Apply"

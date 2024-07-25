@@ -17,7 +17,7 @@ const RecentlyLikedSection: React.FC = () => {
 
   return (
     <section
-      className="flex w-full flex-col gap-2 rounded-2xl bg-white px-10 py-12"
+      className="flex w-full flex-col gap-2 rounded-4xl bg-white px-10 py-12"
     >
       <Heading3 text="Cards you&apos;ve recently liked" />
       {!!likedCollection?.cardDtos.length ? (
@@ -28,8 +28,11 @@ const RecentlyLikedSection: React.FC = () => {
         </div>
       ) : (
         <div className="flex flex-col gap-4">
-          <Heading5 font="normal" classes="text-gray-80"
-            text="You don&apos;t have any liked cards yet. Wanna find some?" />
+          <Heading5 
+            font="normal" 
+            classes="text-gray-80"
+            text="You don&apos;t have any liked cards yet. Wanna find some?" 
+          />
           <PrimaryButton 
             text="Explore" 
             classes="w-44" 

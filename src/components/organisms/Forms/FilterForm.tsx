@@ -123,7 +123,7 @@ const FilterForm: React.FC<FilterFormProps> = ({ type, setFilterParams }) => {
     <form
       onSubmit={handleSubmit(onSubmit)}
       className="flex min-h-full flex-col justify-between
-      border-r border-gray-30 bg-white pt-8"
+      border-r border-gray-30 bg-white py-8"
     >
       <div className="flex w-full flex-col gap-8">
 
@@ -229,21 +229,21 @@ const FilterForm: React.FC<FilterFormProps> = ({ type, setFilterParams }) => {
             </div>
           </>
         )}
-      </div>
 
-      <div className="mx-10 my-8 flex gap-4">
-        <RoundedButton
-          text="Apply"
-          type="submit"
-          style="dark"
-        />
-        <RoundedButton
-          text="Clear"
-          type="button"
-          style="light"
-          onClick={onClear}
-          disabled={!isDirty}
-        />
+        <div className="flex gap-4 px-10">
+          <RoundedButton
+            text="Apply"
+            type="submit"
+            style="dark"
+          />
+          <RoundedButton
+            text="Clear"
+            type="button"
+            style="light"
+            onClick={onClear}
+            disabled={!isDirty}
+          />
+        </div>
       </div>
     </form>
   );

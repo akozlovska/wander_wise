@@ -46,7 +46,7 @@ const TripXLCard: React.FC<TripXLCardProps>
       ref={ref}
       transition={{ duration: 0.3 }}
       className="flex h-fit w-[596px] flex-col items-center justify-between 
-      gap-3 overflow-hidden rounded-3xl bg-white"
+      gap-3 overflow-hidden rounded-4xl bg-white"
     >
       <Link 
         href={Routes.TRIP(card.id)} 
@@ -118,14 +118,18 @@ const TripXLCard: React.FC<TripXLCardProps>
           />
 
           <IconButton 
-            icon={<Icons.share className="h-5 w-5 text-black" />} 
+            icon={<Icons.share className="h-5 w-5 text-inherit" />} 
             onClick={copy}
             text="Share"
             classes="text-gray-80 gap-2"
           />
 
           <IconButton
-            icon={<Icons.report className="h-5 w-5 text-black" />}
+            icon={
+              <Icons.report 
+                className="h-5 w-5 text-inherit" 
+              />
+            }
             text="Report"
             classes="text-gray-80 gap-2 disabled:text-gray-50"
             onClick={() => setIsReportCardModal(true)}

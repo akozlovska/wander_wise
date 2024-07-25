@@ -13,7 +13,7 @@ const RecentReviewsSection: React.FC = () => {
 
   return (
     <section
-      className="flex flex-col gap-2 rounded-2xl bg-white px-10 py-12"
+      className="flex flex-col gap-2 rounded-4xl bg-white px-10 py-12"
     >
       <Heading3 text="Reviews you've recently added" />
 

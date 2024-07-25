@@ -42,7 +42,7 @@ const ProfileInfo: React.FC = () => {
 
   return (
     <article
-      className="flex h-fit flex-col gap-6 rounded-2xl bg-white px-8
+      className="flex h-fit flex-col gap-6 rounded-4xl bg-white px-8
       py-12 text-center text-base font-normal text-black"
     >
       <div className="relative flex justify-center">
@@ -75,7 +75,9 @@ const ProfileInfo: React.FC = () => {
         <Heading2 
           text={
             user?.firstName || user?.lastName 
-              ? `${user?.firstName || ''}${user?.firstName && user?.lastName ? ' ' : ''}${user?.lastName || ''}` 
+              ? `${user?.firstName || ''}
+                ${user?.firstName && user?.lastName ? ' ' : ''}
+                ${user?.lastName || ''}` 
               : ''
           } 
           font="medium"

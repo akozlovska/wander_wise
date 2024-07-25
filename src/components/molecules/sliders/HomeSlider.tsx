@@ -24,7 +24,7 @@ const HomeSlider: React.FC<HomeSliderProps> = ({ slides }) => {
   }, [swiperRef]);
 
   return (
-    <div className="relative h-full w-full overflow-hidden rounded-3xl">
+    <div className="relative h-full w-full overflow-hidden rounded-4xl">
       <Swiper
         onSwiper={setSwiperRef}
         className="h-full"
@@ -45,7 +45,7 @@ const HomeSlider: React.FC<HomeSliderProps> = ({ slides }) => {
               src={slide}
               alt="Homepage slide"
               fill
-              className="rounded-3xl object-cover"
+              className="rounded-4xl object-cover"
             />
           </SwiperSlide>
         ))}

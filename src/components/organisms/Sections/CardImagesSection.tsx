@@ -20,7 +20,7 @@ const CardImagesSection: React.FC<CardImagesSectionProps>
 
   return (
     <section 
-      className="flex w-full flex-col gap-px overflow-hidden rounded-3xl"
+      className="flex w-full flex-col gap-px overflow-hidden rounded-4xl"
     >
       {displayedImages.length ? (
         <>
@@ -50,7 +50,7 @@ const CardImagesSection: React.FC<CardImagesSectionProps>
       ) : (
         <div 
           className="relative flex w-full items-center 
-            justify-center rounded-3xl bg-gray-30 py-[14%]"
+            justify-center rounded-4xl bg-gray-30 py-[14%]"
         >
           <Image 
             src="/trip-default.webp" 

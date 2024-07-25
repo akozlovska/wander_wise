@@ -1,3 +1,5 @@
+import { twMerge } from "tailwind-merge";
+
 interface TextBaseProps {
   text: string;
   classes?: string;
@@ -5,7 +7,11 @@ interface TextBaseProps {
 }
 
 const TextBase: React.FC<TextBaseProps> = ({ text, classes, font }) => {
-  return <p className={`font-${font} text-base text-black ${classes}`}>{text}</p>;
+  return (
+    <p className={twMerge(`font-${font} text-base text-black`, classes)}>
+      {text}
+    </p>
+  );
 };
 
 export default TextBase;

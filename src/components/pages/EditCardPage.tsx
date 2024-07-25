@@ -28,7 +28,7 @@ const EditCardPage = () => {
   return (
     <StandardPageLayout>
       <article className="relative flex w-[670px] flex-col items-center 
-      gap-6 self-center rounded-3xl bg-white px-10 py-12">
+      gap-6 self-center rounded-4xl bg-white px-10 py-12">
         <button
           type="button"
           onClick={() => setIsAddCardImagesModal(true)}

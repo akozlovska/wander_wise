@@ -41,7 +41,7 @@ const ModalTemplate: React.FC<ModalTemplateProps>
         exit={{ opacity: 0, scale: 0, x: '-50%', y: '-50%'}} 
         className="absolute left-1/2 top-1/2 flex
           w-[670px] flex-col items-center justify-center gap-4 
-          rounded-3xl border-b border-gray-200
+          rounded-4xl border-b border-gray-200
           bg-white px-10 py-12 text-center shadow-xl backdrop-blur-none"
       >
         {!!title && (
