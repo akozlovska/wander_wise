@@ -55,7 +55,7 @@ const PasswordInput = <T extends FieldValues>({
 
             <span 
               onClick={() => setIsShown(curr => !curr)} 
-              className="cursor-pointer"
+              className="cursor-pointer pl-4"
             >
               {isShown ? <Icons.eyeClosed /> : <Icons.eye />}
             </span>

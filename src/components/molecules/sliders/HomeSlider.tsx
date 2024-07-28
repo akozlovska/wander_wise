@@ -46,6 +46,7 @@ const HomeSlider: React.FC<HomeSliderProps> = ({ slides }) => {
               alt="Homepage slide"
               fill
               className="rounded-4xl object-cover"
+              priority={true}
             />
           </SwiperSlide>
         ))}

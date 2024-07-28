@@ -79,7 +79,8 @@ const SignInForm: React.FC<SignInFormProps>
         />
         <UnstyledButton
           text="Forgot password?"
-          classes="font-bold self-start"
+          classes="font-medium self-start 
+          text-blue underline hover:text-[#0D00CC]"
           onClick={openRestorePasswordModal}
         />
       </div>

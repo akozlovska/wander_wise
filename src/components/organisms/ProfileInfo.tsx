@@ -10,7 +10,7 @@ import {
   Heading2, 
   Icons, 
   TextBase, 
-  ErrorText 
+  ErrorText,
 } from "@/src/components/atoms";
 import { useUser } from "@/src/store/user";
 import { useGetUserSocials, useLogout } from "@/src/queries";

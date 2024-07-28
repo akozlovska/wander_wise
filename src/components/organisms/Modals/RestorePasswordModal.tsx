@@ -36,7 +36,7 @@ const RestorePasswordModal: React.FC<RestorePasswordModalProps> = ({
           {onOpenSignIn && (
             <UnstyledButton
               text="Sign in to your account"
-              classes="font-bold"
+              classes="font-semibold"
               onClick={handleSignInClick}
             />
           )}

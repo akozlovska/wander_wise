@@ -10,13 +10,14 @@ import "./globals.css";
 const inter = Inter({
   subsets: ["latin"],
   variable: "--font-inter",
-  weight: ["400", "500"],
+  weight: ["400", "500", "600"],
+  display: "swap",
 });
 
 const maven = Maven_Pro({
   subsets: ["latin"],
   variable: "--font-maven",
-  weight: ["400", "500", "700"],
+  weight: ["500", "700"],
 });
 
 export const metadata: Metadata = {

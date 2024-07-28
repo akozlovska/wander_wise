@@ -12,11 +12,12 @@ const BackButton = () => {
 
   return (
     <button 
-      className="flex w-fit cursor-pointer items-center gap-2" 
+      className="flex w-fit cursor-pointer items-center gap-2 
+      hover:text-gray-80" 
       onClick={() => prevPage.link ? router.push(prevPage.link) : router.back()}
     >
-      <Icons.left className="h-6 w-6" />
-      <Heading5 text={prevPage.name} font="semibold"/>
+      <Icons.left className="h-6 w-6 text-inherit" />
+      <Heading5 text={prevPage.name} font="semibold" classes="text-inherit" />
     </button>
   );
 };

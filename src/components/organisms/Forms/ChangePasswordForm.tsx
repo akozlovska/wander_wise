@@ -86,7 +86,8 @@ const ChangePasswordForm: React.FC<ChangePasswordFormProps>
       <UnstyledButton
         text="Forgot Password?"
         onClick={openRestorePasswordModal}
-        classes="mb-4 self-start"
+        classes="mb-4 self-start font-medium 
+        text-blue underline hover:text-[#0D00CC]"
       />
 
       <PrimaryButton 

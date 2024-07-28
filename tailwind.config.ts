@@ -31,6 +31,7 @@ const config: Config = {
         info: "#009EE2",
         warning: "FFDD2A",
         success: "#1DD000",
+        blue: "#2B14FF",
       },
 
       fontSize: {

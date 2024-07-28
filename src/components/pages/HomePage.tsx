@@ -31,7 +31,7 @@ const HomePage = () => {
           <PrimaryButton
             text="Let's start"
             type="button"
-            classes="h-24 w-1/3 text-2xl pointer-events-auto"
+            classes="h-fit w-1/3 text-3xl pointer-events-auto p-6"
             onClick={() => push(Routes.TRIPS)}
           />
         </div>

@@ -139,7 +139,7 @@ export const getPrevPage = (currPathname: string) => {
     
     default:
       break;
-  } 
+  }
 
   return { name, link };
 };

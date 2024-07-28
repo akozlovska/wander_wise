@@ -8,6 +8,7 @@ import {
   FieldValues,
   Path,
 } from "react-hook-form";
+import { twMerge } from "tailwind-merge";
 import Image from "next/image";
 import { 
   InputControllerWrapper,
@@ -75,8 +76,10 @@ const MultipleFileInput = <T extends FieldValues>({
           {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
           <label 
             htmlFor={name} 
-            className="relative flex w-full overflow-hidden 
-            rounded-2xl pb-[60%]"
+            className={twMerge(
+              'relative flex w-full overflow-hidden rounded-2xl', 
+              field.value.length ? 'pb-[60%]' : 'h-64'
+            )}
           >
             <ImageInputPlaceholder 
               image={field.value[field.value.length - 1]} 
