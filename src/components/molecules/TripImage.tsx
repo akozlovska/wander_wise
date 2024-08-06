@@ -7,9 +7,11 @@ interface TripImageProps {
   imageLinks: string[],
   alt: string,
   sizes: string,
+  isInCollection?: boolean,
 }
 
-const TripImage: React.FC<TripImageProps> = ({ imageLinks, alt, sizes }) => {
+const TripImage: React.FC<TripImageProps> 
+= ({ imageLinks, alt, sizes, isInCollection = false }) => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [isTripImages, setIsTripImages] = useState(!!imageLinks.length);
   const handleImageError = () => {
@@ -39,9 +41,9 @@ const TripImage: React.FC<TripImageProps> = ({ imageLinks, alt, sizes }) => {
           <Image 
             src="/trip-default.webp" 
             alt="No card images"
-            width={120}
-            height={120}
-            className="h-32 w-32"
+            width={isInCollection ? 70 : 120}
+            height={isInCollection ? 70 : 120}
+            className={isInCollection ? "h-20 w-20" : "h-32 w-32"}
             priority={true}
           />
         </div>

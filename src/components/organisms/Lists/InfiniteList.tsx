@@ -88,10 +88,13 @@ const InfiniteList: React.FC<InfiniteListProps>
 
   return (
     <section
-      className="grid max-h-[814px]
-      w-full grid-cols-[1fr,210px] justify-items-center"
+      className="grid h-full min-h-[814px] w-full
+      grid-cols-[1fr,210px] justify-items-center overflow-y-scroll"
     >
-      <div className="relative flex w-full items-end justify-center">
+      <div 
+        className="relative flex h-[814px] w-full 
+        items-end justify-center self-center"
+      >
         <AnimatePresence mode="popLayout">
           <TripXLCard key={selectedCard} card={allCards[selectedCard]} /> 
         </AnimatePresence>

@@ -2,8 +2,9 @@
 
 import { useState } from "react";
 import { AnimatePresence } from "framer-motion";
+import { twMerge } from "tailwind-merge";
 import { IconButton, Stars } from "@/src/components/molecules";
-import { Icons, TextBase, Heading5 } from "@/src/components/atoms";
+import { Icons, TextBase, Heading5, TextMedium } from "@/src/components/atoms";
 import { 
   DeleteReviewModal, 
   CreateReportModal,
@@ -24,9 +25,12 @@ const ReviewCard: React.FC<ReviewCardProps> = ({ review }) => {
   const { user } = useUser();
   const isReviewedByUser = user?.pseudonym === review.author;
 
+  const [isFullReview, setIsFullReview] = useState(review.text.length <= 500);
+
   return (
-    <div 
-      className="flex flex-col gap-4 rounded-2xl bg-white p-6"
+    <article 
+      className="flex h-fit max-w-[440px] flex-col gap-4 
+      rounded-2xl bg-white p-6"
     >
       <div className="flex items-start justify-between gap-6">
         <div className="flex gap-4">
@@ -61,7 +65,27 @@ const ReviewCard: React.FC<ReviewCardProps> = ({ review }) => {
         </div>
       </div>
       
-      <TextBase text={review.text} font="normal" classes="text-gray-80" />
+      <TextBase 
+        text={review.text} 
+        font="normal" 
+        classes={twMerge(
+          'text-gray-80 break-words', 
+          !isFullReview && 'line-clamp-[10]'
+        )}
+      />
+
+      {!isFullReview && (
+        <button 
+          className="self-start"
+          onClick={() => setIsFullReview(true)}
+        >
+          <TextMedium 
+            text="show more" 
+            font="normal" 
+            classes="text-gray-80 underline"
+          />
+        </button>
+      )}
       
       <AnimatePresence>
         {isDeleteReviewModal && (
@@ -89,7 +113,7 @@ const ReviewCard: React.FC<ReviewCardProps> = ({ review }) => {
           />
         )}
       </AnimatePresence>
-    </div>
+    </article>
   );
 };
 

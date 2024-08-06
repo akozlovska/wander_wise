@@ -24,7 +24,7 @@ const Header: React.FC = () => {
 
   return (
     <header
-      className="flex items-center justify-between px-10 py-7"
+      className="flex items-center justify-between bg-white px-10 py-7"
     >
       <Link href={Routes.HOME} className="relative h-10 w-48">
         <Image

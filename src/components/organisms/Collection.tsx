@@ -4,6 +4,7 @@ import Link from "next/link";
 import { TextMedium } from "@/src/components/atoms";
 import { ICollection } from "@/src/services";
 import { Routes } from "@/src/lib/constants";
+import { TripImage } from "@/src/components/molecules";
 
 interface CollectionProps {
   collection: ICollection,
@@ -28,13 +29,12 @@ const Collection: React.FC<CollectionProps> = ({ collection }) => {
                   (i === 2 && i === collectionCards.length - 1) && 'col-span-2',
                 )}
               >
-                <Image 
-                  src={card.imageLinks[0]} 
-                  alt={card.name}
-                  fill
+                <TripImage 
+                  imageLinks={card.imageLinks} 
+                  alt={card.name} 
                   sizes="(max-width: 640px) 100vw, 
                   (max-width: 768px) 50vw, 25vw"
-                  className="object-cover" 
+                  isInCollection={true}
                 />
               </div>
             ))}

@@ -18,6 +18,7 @@ import {
   RenameCollectionModal, 
   DeleteCollectionModal, 
   Gallery,
+  PrivacyToggle
 } from '@/src/components/organisms';
 import { 
   StandardPageLayout,
@@ -97,14 +98,22 @@ const CollectionPage = () => {
           </div> 
         </div>
 
-        {collection && collection.cardDtos.length ? (
-          <Gallery cards={collection.cardDtos} />
-        ) : (
-          <Heading4 
-            text="You don’t have any cards in this collection yet." 
-            font="normal"
-            classes="pt-4" 
-          />
+        {collection && (
+          <>
+            <div className="-mt-5">
+              <PrivacyToggle type="collection" element={collection} />
+            </div>
+
+            {!!collection.cardDtos.length ? (
+              <Gallery cards={collection.cardDtos} />
+            ) : (
+              <Heading4 
+                text="You don’t have any cards in this collection yet." 
+                font="normal"
+                classes="pt-4" 
+              />
+            )}
+          </>
         )}
       </LoadingStateWrapper>
 

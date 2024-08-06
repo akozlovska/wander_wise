@@ -18,7 +18,7 @@ const TripsPage = () => {
   return (
     <ScreenHeightLayout>
       <div className="grid h-full w-full grid-cols-[345px,1fr] overflow-hidden">
-        <div className="overflow-y-scroll">
+        <div className="overflow-y-auto">
           <SearchCardsForm setFilterParams={setFilterParams} />
         </div>
 

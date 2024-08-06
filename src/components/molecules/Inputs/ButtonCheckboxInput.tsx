@@ -24,7 +24,6 @@ const ButtonCheckboxInput = <T extends FieldValues>({
     <InputControllerWrapper
       control={control}
       name={name}
-      isLabelVisible={false}
       isErrorLabelVisible={false}
     >
       {( field ) => (

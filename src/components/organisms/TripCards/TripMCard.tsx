@@ -59,7 +59,8 @@ const TripMCard: React.FC<TripMCardProps> = ({ card }) => {
       className="flex flex-col items-center gap-4 rounded-3xl bg-white p-4"
     >
       <Link 
-        href={Routes.TRIP(card.id)} 
+        href={Routes.TRIP(card.id)}
+        target={pathname.startsWith('/trips') ? '_blank' : '_self'}
         className="group relative w-full overflow-hidden rounded-3xl pb-[68%]"
       >
         {isCopied && (

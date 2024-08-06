@@ -2,7 +2,7 @@
 
 import { Dispatch, memo, SetStateAction, useCallback, useEffect } from "react";
 import { RadarAutocompleteAddress } from "radar-sdk-js/dist/types";
-import { SubmitHandler, useForm } from "react-hook-form";
+import { SubmitHandler, useForm, useWatch } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import {
   Divider,
@@ -39,13 +39,14 @@ type Props = {
   setFilterParams: Dispatch<SetStateAction<ISearchCard | null>>;
 };
 
-export interface FilterFormData {
+export interface SearchCardsFormData {
   author: CardAuthorsType[],
   startLocation: RadarAutocompleteAddress | null,
   tripTypes: TripTypesType[],
   climate: ClimateType[],
   specialRequirements: SpecialRequirementsType[],
   travelDistance: TravelDistanceType,
+  specificDistance: RadarAutocompleteAddress | null,
 }
 
 const SearchCardsForm: React.FC<Props> = ({ setFilterParams }) => {
@@ -55,7 +56,9 @@ const SearchCardsForm: React.FC<Props> = ({ setFilterParams }) => {
     formState: { errors, isDirty },
     control,
     reset,
-  } = useForm<FilterFormData>({
+    setValue,
+    setError,
+  } = useForm<SearchCardsFormData>({
     defaultValues: {
       author: [],
       startLocation: null,
@@ -63,23 +66,84 @@ const SearchCardsForm: React.FC<Props> = ({ setFilterParams }) => {
       climate: [],
       specialRequirements: [],
       travelDistance: undefined,
+      specificDistance: null,
     },
     resolver: yupResolver(validationSchema),
+    mode: 'onChange',
   });
 
-  const onSubmit: SubmitHandler<FilterFormData> = (data) => {
+  const onSubmit: SubmitHandler<SearchCardsFormData> = (data) => {
     const {
       startLocation, 
       travelDistance, 
+      specificDistance,
       ...trimmedData
     } = trimObjectFields(data);
 
+    if (startLocation && (!startLocation.city || !startLocation.country)) {
+      setError('startLocation', {
+        type: "manual",
+        message: "Invalid start location",
+      });
+
+      return;
+    }
+
+    const getFinalDistance = () => {
+      if (travelDistance === 'Specific') {
+        if (specificDistance?.city) {
+          return [ specificDistance.city ];
+        } else if (specificDistance?.country) {
+          return [ specificDistance.country ];
+        } else {
+          return null;
+        }
+      } else {
+        return [ travelDistance ];
+      }
+    };
+
+    const finalDistance = getFinalDistance();
+
+    if (!finalDistance) {
+      setError('specificDistance', {
+        type: "manual",
+        message: "Invalid specific distance",
+      });
+
+      return;
+    }
+
     setFilterParams({
       ...trimmedData,
-      travelDistance: [ travelDistance ],
+      travelDistance: finalDistance,
       startLocation: `${startLocation?.city}, ${startLocation?.country}`,
     });
   };
+
+  const watchSpecificDistance = useWatch({
+    control, 
+    name: 'specificDistance',
+  });
+
+  const watchTravelDistance = useWatch({
+    control, 
+    name: 'travelDistance',
+  });
+
+  useEffect(() => {
+    if (watchSpecificDistance && watchTravelDistance !== 'Specific') {
+      setValue('travelDistance', 'Specific');
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [watchSpecificDistance, setValue]);
+
+  useEffect(() => {
+    if (watchSpecificDistance && watchTravelDistance !== 'Specific') {
+      setValue('specificDistance', null);
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [watchTravelDistance, setValue]);
 
   const onClear = useCallback(() => {
     reset();
@@ -95,15 +159,18 @@ const SearchCardsForm: React.FC<Props> = ({ setFilterParams }) => {
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="flex flex-col gap-8
+      className="flex min-h-full flex-col gap-8 overflow-y-scroll
       border-r border-gray-30 bg-white py-8"
     >
-      <div className="mx-10 flex flex-col">
-        <TextBase text="Where are you now?*" font="semibold" />
+      <div className="flex flex-col gap-2 px-10">
+        <TextBase 
+          text="Where are you now?" 
+          font="semibold" 
+        />
         <TextSmall
           text="We need this info to build distance of your trip"
           font="normal"
-          classes="mt-2"
+          classes="mb-2"
         />
         <LocationInput 
           placeholder="Enter your place"
@@ -115,17 +182,17 @@ const SearchCardsForm: React.FC<Props> = ({ setFilterParams }) => {
 
       <Divider />
 
-      <div className="mx-10 flex flex-col">
+      <div className="flex flex-col gap-2 px-10">
         <TextBase
-          text="What is your preferred travel distance?*"
+          text="What is your preferred travel distance?"
           font="semibold"
         />
         <TextSmall
           text="We need this info to figure out the scale of your trip"
           font="normal"
-          classes="mt-2"
+          classes="mb-2"
         />
-        <div className="mt-3 flex flex-wrap gap-3">
+        <div className="mb-2 grid grid-cols-2 gap-3">
           {DISTANCE.map(([distanceText, distanceValue]) => (
             <RadioButtonInput
               key={distanceValue}
@@ -135,18 +202,26 @@ const SearchCardsForm: React.FC<Props> = ({ setFilterParams }) => {
               value={distanceValue}
             />
           ))}
-
-          {errors.travelDistance?.message && (
-            <ErrorText errorText={errors.travelDistance.message} />
-          )}
         </div>
+
+        <LocationInput 
+          placeholder="Enter specific location"
+          name="specificDistance"
+          control={control}
+          errorText={errors.specificDistance?.message}
+          countryLayer={true}
+        />
+
+        {errors.travelDistance?.message && (
+          <ErrorText errorText={errors.travelDistance.message} classes="mt-1" />
+        )}
       </div>
 
       <Divider />
 
-      <div className="mx-10 flex flex-col">
+      <div className="flex flex-col gap-3 px-10">
         <TextBase text="Type of your trip" font="semibold" />
-        <div className="mt-3 flex flex-wrap gap-2">
+        <div className="flex flex-wrap gap-2">
           {ATMOSPHERES.map((atmosphere) => (
             <ButtonCheckboxInput
               key={atmosphere}
@@ -156,13 +231,16 @@ const SearchCardsForm: React.FC<Props> = ({ setFilterParams }) => {
             />
           ))}
         </div>
+        {errors.tripTypes?.message && (
+          <ErrorText errorText={errors.tripTypes.message} />
+        )}
       </div>
 
       <Divider />
 
-      <div className="mx-10 flex flex-col">
+      <div className="flex flex-col gap-3 px-10">
         <TextBase text="Desired climate" font="semibold" />
-        <div className="mt-3 flex flex-wrap gap-2">
+        <div className="flex flex-wrap gap-2">
           {CLIMATES.map((climate) => (
             <ButtonCheckboxInput
               key={climate}
@@ -176,9 +254,9 @@ const SearchCardsForm: React.FC<Props> = ({ setFilterParams }) => {
 
       <Divider />
 
-      <div className="mx-10 flex flex-col">
+      <div className="flex flex-col gap-3 px-10">
         <TextBase text="Special requirements" font="semibold" />
-        <div className="mt-3 flex flex-wrap gap-2">
+        <div className="flex flex-wrap gap-2">
           {SPECIALS.map((special) => (
             <ButtonCheckboxInput
               key={special}
@@ -192,9 +270,9 @@ const SearchCardsForm: React.FC<Props> = ({ setFilterParams }) => {
 
       <Divider />
 
-      <div className="mx-10 flex flex-col">
+      <div className="flex flex-col gap-3 px-10">
         <TextBase text="Cards author" font="semibold" />
-        <div className="mt-3 flex flex-wrap gap-2">
+        <div className="flex flex-wrap gap-2">
           {AUTHORS.map(([authorText, authorValue]) => (
             <CheckboxInput
               key={authorValue}

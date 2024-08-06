@@ -5,7 +5,7 @@ export interface ICollection {
   author: string,
   name: string,
   imageLink: string,
-  isPublic: boolean,
+  public: boolean,
   cardDtos: ICard[],
 }
 
@@ -19,5 +19,4 @@ export interface IUpdateCollection {
   id: number,
   name: string,
   cardIds: number[],
-  isPublic: boolean,
 }

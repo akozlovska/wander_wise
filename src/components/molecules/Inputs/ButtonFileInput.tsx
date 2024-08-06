@@ -39,8 +39,6 @@ const ButtonFileInput = <T extends FieldValues>({
     <InputControllerWrapper
       control={control}
       name={name}
-      isLabelVisible={false}
-      isErrorLabelVisible
     >
       {(field) => (
         <div className="flex w-full flex-col gap-3">

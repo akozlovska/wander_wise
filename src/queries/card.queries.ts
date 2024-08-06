@@ -194,6 +194,32 @@ export function useRemoveCardFromSaved() {
   });
 }
 
+export function useHideCard() {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: (cardId: number) => cardService.hideCard(cardId),
+    onSuccess: async (_, cardId) => {
+      await queryClient.invalidateQueries({
+        queryKey: ["card-details", { cardId }],
+      });
+    },
+  });
+}
+
+export function useRevealCard() {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: (cardId: number) => cardService.revealCard(cardId),
+    onSuccess: async (_, cardId) => {
+      await queryClient.invalidateQueries({
+        queryKey: ["card-details", { cardId }],
+      });
+    },
+  });
+}
+
 export function useReportCard() {
   return useMutation({
     mutationFn: (data: IReportCard) => cardService.reportCard(data),

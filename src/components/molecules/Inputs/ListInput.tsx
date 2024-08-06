@@ -42,8 +42,6 @@ const ListInput = <T extends FieldValues>({
     <InputControllerWrapper
       control={control}
       name={name}
-      isLabelVisible
-      isErrorLabelVisible
       label={label}
     >
       {(field) => (
@@ -91,7 +89,11 @@ const ListInput = <T extends FieldValues>({
                         field.value.filter((v: string) => v !== value))
                     }
                   />
-                  <TextMedium text={value} font="normal" />
+                  <TextMedium 
+                    text={value} 
+                    font="normal" 
+                    classes="overflow-hidden break-words" 
+                  />
                 </motion.li>
               ))}
             </ul>

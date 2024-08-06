@@ -49,6 +49,7 @@ const CreateCardForm: React.FC<CreateCardFormProps> = ({ setNewCardId }) => {
   const {
     control,
     handleSubmit,
+    setError,
     formState: { errors },
   } = useForm<CreateCardFormData>({
     defaultValues: {
@@ -72,10 +73,19 @@ const CreateCardForm: React.FC<CreateCardFormProps> = ({ setNewCardId }) => {
       ...trimmedData
     } = trimObjectFields(data);
 
+    if (!location?.city || !location?.country) {
+      setError('location', {
+        type: 'manual',
+        message: 'Invalid card location'
+      });
+
+      return;
+    }
+
     mutate({
       ...trimmedData,
-      populatedLocality: location?.city || '',
-      country: location?.country || '',
+      populatedLocality: location.city,
+      country: location.country,
     },
     {
       onError: (e) => setErrorMessage(e),

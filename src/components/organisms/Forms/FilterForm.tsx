@@ -126,7 +126,6 @@ const FilterForm: React.FC<FilterFormProps> = ({ type, setFilterParams }) => {
       border-r border-gray-30 bg-white py-8"
     >
       <div className="flex w-full flex-col gap-8">
-
         {!!countries.length && (
           <>
             <div className="mx-10 flex flex-col">

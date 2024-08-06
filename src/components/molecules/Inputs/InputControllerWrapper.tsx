@@ -9,20 +9,17 @@ import {
   FieldValues,
   Path,
 } from "react-hook-form";
-import { twMerge } from "tailwind-merge";
 import { ErrorText } from "@/src/components/atoms";
 
 interface InputControllerWrapperProps<T extends FieldValues> {
   control: Control<T>;
   name: FieldPath<T>;
-  isLabelVisible: boolean;
   isErrorLabelVisible?: boolean;
   label?: string;
   children: (field: ControllerRenderProps<T, Path<T>>) => ReactNode;
 }
 
 const InputControllerWrapper = <T extends FieldValues>({
-  isLabelVisible,
   isErrorLabelVisible = true,
   control,
   name,
@@ -35,17 +32,18 @@ const InputControllerWrapper = <T extends FieldValues>({
       control={control}
       render={({ field, fieldState }) => (
         <div 
-          className={twMerge('flex flex-col', isLabelVisible && 'gap-3')}
+          className="flex flex-col gap-3"
         >
-          <label
-            htmlFor={name}
-            className={twMerge(`text-black text-xl font-medium
-            relative flex flex-col w-full items-start`,
-            !isLabelVisible && 'sr-only'
-            )}
-          >
-            {label}
-          </label>
+          {!!label && (
+            <label
+              htmlFor={name}
+              className="relative flex w-full
+              flex-col items-start text-xl font-medium text-black"
+            >
+              {label}
+            </label>
+          )}
+
 
           {children(field)}
 

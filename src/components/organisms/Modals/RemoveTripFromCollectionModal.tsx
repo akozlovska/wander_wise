@@ -29,7 +29,6 @@ RemoveTripFromCollectionModalProps
       const data: IUpdateCollection = {
         id: collection.id,
         name: collection.name,
-        isPublic: collection.isPublic,
         cardIds: collection.cardDtos
           .filter(card => card.id !== trip.id)
           .map(card => card.id),
@@ -57,7 +56,7 @@ RemoveTripFromCollectionModalProps
 
       <div className="grid w-full grid-cols-2 gap-5">
         <RoundedButton
-          text="Delete"
+          text="Remove"
           onClick={handleRemoveTrip}
           style="red"
           disabled={isPending}

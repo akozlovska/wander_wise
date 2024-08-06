@@ -3,7 +3,6 @@ import {
   CardAuthorsType, 
   ClimateType, 
   SpecialRequirementsType, 
-  TravelDistanceType, 
   TripTypesType 
 } from "@/src/services";
 
@@ -61,7 +60,7 @@ export interface ISearchCard {
   tripTypes: TripTypesType[],
   climate: ClimateType[],
   specialRequirements: SpecialRequirementsType[],
-  travelDistance: TravelDistanceType[],
+  travelDistance: string[],
 }
 
 export interface ISearchCardResponse {

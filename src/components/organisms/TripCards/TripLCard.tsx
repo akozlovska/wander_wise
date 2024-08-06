@@ -33,7 +33,7 @@ const TripLCard: React.FC<TripLCardProps> = ({ card }) => {
   const tabs: ICardTabs = {
     'Description': card.description,
     'Why this place?': card.whyThisPlace,
-    'Map': { latitude: card.latitude, longitude: card.longitude},
+    'Map': { latitude: card.latitude, longitude: card.longitude },
   };
 
   const [isCopied, copy] = useCopyUrlToClipboard(Routes.TRIP(card.id));
@@ -50,15 +50,15 @@ const TripLCard: React.FC<TripLCardProps> = ({ card }) => {
     >
       <Heading2 text={card.name} classes="self-start mb-1" font="semibold" />
 
-      <div className="grid w-full grid-cols-12 gap-x-6 gap-y-5">
-        <div className="col-span-5 row-span-1">
+      <div className="grid w-full auto-rows-min grid-cols-12 gap-x-6 gap-y-5">
+        <div className="col-span-5">
           <div className="flex w-full gap-2">
             <Icons.location className="h-8 w-8" />
             <Heading4 text={card.whereIs} font="normal"/>
           </div>
         </div>
 
-        <div className="col-span-7 row-span-1 self-end">
+        <div className="col-span-7 self-end">
           <div className="relative flex h-8 w-full justify-end gap-4">
             {isCopied && (
               <span 
@@ -122,17 +122,17 @@ const TripLCard: React.FC<TripLCardProps> = ({ card }) => {
           </div>
         </div>
 
-        <div className="col-span-5 row-span-1 flex flex-col gap-6">
+        <div className="col-span-5 flex flex-col gap-6">
           <div 
             className="max-h-[546px] grow overflow-hidden rounded-3xl 
             border-2 border-gray-300 bg-white p-8"
           >
-            <Tabs tabs={tabs} location="Page" />
+            <Tabs tabs={tabs} mapLink={card.mapLink} location="Page" />
           </div>
           <SaveButton cardId={card.id} />
         </div>
 
-        <div className="col-span-7 row-span-1">
+        <div className="col-span-7 h-fit">
           <CardImagesSection images={card.imageLinks} />
         </div>
       </div>

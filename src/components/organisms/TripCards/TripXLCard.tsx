@@ -35,7 +35,7 @@ const TripXLCard: React.FC<TripXLCardProps>
   const tabs: ICardTabs = {
     'Description': card.description,
     'Why this place?': card.whyThisPlace,
-    'Distance': { value: card.distance, mapsLink: card.mapLink },
+    'Distance': card.distance,
   };
 
   return (
@@ -50,6 +50,7 @@ const TripXLCard: React.FC<TripXLCardProps>
     >
       <Link 
         href={Routes.TRIP(card.id)} 
+        target="_blank"
         className="relative mb-1 w-full pb-[50%]"
       >
         <TripImage 
@@ -94,7 +95,7 @@ const TripXLCard: React.FC<TripXLCardProps>
           </div>
         </div>
 
-        <Tabs tabs={tabs} location="Card" />
+        <Tabs tabs={tabs} mapLink={card.mapLink} location="Card" />
 
         <Divider />
 

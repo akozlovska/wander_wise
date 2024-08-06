@@ -53,15 +53,15 @@ const EditCardForm: React.FC<EditCardFormProps> = ({ card }) => {
 
   const validationSchema = updateCardSchema();
   const defaultValues = useMemo(() => ({
-    name: card?.name,
+    name: card.name,
     location: null,
-    tripTypes: card?.tripTypes,
-    climate: card?.climate,
-    specialRequirements: card?.specialRequirements,
-    description: card?.description,
-    whyThisPlace: card?.whyThisPlace,
-    imageLinks: card?.imageLinks,
-    mapLink: card?.mapLink,
+    tripTypes: card.tripTypes,
+    climate: card.climate,
+    specialRequirements: card.specialRequirements,
+    description: card.description,
+    whyThisPlace: card.whyThisPlace,
+    imageLinks: card.imageLinks,
+    mapLink: card.mapLink,
   }), [card]);
   
   const {
@@ -69,6 +69,7 @@ const EditCardForm: React.FC<EditCardFormProps> = ({ card }) => {
     handleSubmit,
     formState: { errors },
     setValue,
+    setError,
     watch,
   } = useForm<UpdateCardFormData>({
     defaultValues,
@@ -84,15 +85,31 @@ const EditCardForm: React.FC<EditCardFormProps> = ({ card }) => {
     } = trimObjectFields(data);
 
     const [populatedLocality, region, country, continent] 
-    = card.whereIs.split(',');
+    = card.whereIs.split(',').map(element => element.trim());
+    let locationData = { populatedLocality, region, country, continent };
+
+    if (location) {
+      if (!location.city || !location.country) {
+        setError('location', {
+          type: 'manual',
+          message: 'Invalid card location'
+        });
+  
+        return;
+      } else {
+        locationData = {
+          populatedLocality: location.city,
+          region: '',
+          country: location.country,
+          continent: '',
+        };
+      }
+    }
     
     mutate({
       ...trimmedData,
+      ...locationData,
       id: card.id,
-      populatedLocality: location?.city || populatedLocality.trim(),
-      region: location ? '' : region.trim(),
-      country: location?.country || country.trim(),
-      continent: location ? '' : continent.trim(),
     },
     {
       onError: (e) => setErrorMessage(e),
@@ -219,7 +236,7 @@ const EditCardForm: React.FC<EditCardFormProps> = ({ card }) => {
         label="Type of this place" 
       />
 
-      <div className="grid grid-cols-2 gap-5">
+      <div className="mb-2 grid grid-cols-2 gap-5">
         <div className="flex flex-col gap-4">
           <Heading5 text="Special" font="medium" />
           <Divider />

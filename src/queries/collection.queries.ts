@@ -8,7 +8,7 @@ import { useUser } from "@/src/store/user";
 
 export function useGetCollection(collectionId: number) {
   return useQuery({
-    queryKey: ['collection', {collectionId}],
+    queryKey: ['collection', { collectionId }],
     queryFn: () => collectionService.getCollection(collectionId),
     enabled: !!collectionId,
   });
@@ -64,6 +64,34 @@ export function useDeleteCollection() {
     onSuccess: async () => {
       await queryClient.invalidateQueries({
         queryKey: ['user-collections', {userId: user?.id}],
+      });
+    }
+  });
+}
+
+export function useHideCollection() {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: (collectionId: number) => 
+      collectionService.hideCollection(collectionId),
+    onSuccess: async (_, collectionId) => {
+      await queryClient.invalidateQueries({
+        queryKey: ['collection', { collectionId }],
+      });
+    }
+  });
+}
+
+export function useRevealCollection() {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: (collectionId: number) => 
+      collectionService.revealCollection(collectionId),
+    onSuccess: async (_, collectionId) => {
+      await queryClient.invalidateQueries({
+        queryKey: ['collection', { collectionId }],
       });
     }
   });

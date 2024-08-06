@@ -84,7 +84,9 @@ const ProfileInfo: React.FC = () => {
           classes="mb-1"
         />
 
-        {user?.bio && <TextBase text={user.bio} font="normal" />}
+        {user?.bio && (
+          <TextBase text={user.bio} font="normal" classes="break-words" />
+        )}
       </div>
 
       <Divider />

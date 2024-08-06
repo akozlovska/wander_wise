@@ -7,6 +7,7 @@ export { default as Header } from "./Header";
 export { default as Collection } from "./Collection";
 export { default as Pagination } from "./Pagination";
 export { default as ProfileInfo } from "./ProfileInfo";
+export { default as PrivacyToggle} from "./PrivacyToggle";
 export { default as ConfirmEmailButton } from "./ConfirmEmailButton";
 
 export { default as TripSCard } from "./TripCards/TripSCard";

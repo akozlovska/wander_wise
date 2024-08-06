@@ -1,10 +1,18 @@
 "use client";
 
-import React, { useState, useEffect, memo } from "react";
+import React, { useState, useEffect, memo, useCallback } from "react";
 import Radar from "radar-sdk-js";
 import { RadarAutocompleteAddress } from "radar-sdk-js/dist/types";
-import { Control, FieldPath, FieldValues, useWatch } from "react-hook-form";
+import { 
+  Control, 
+  ControllerRenderProps, 
+  FieldPath, 
+  FieldValues, 
+  Path, 
+  useWatch 
+} from "react-hook-form";
 import { twMerge } from "tailwind-merge";
+import { debounce } from "lodash";
 import { InputControllerWrapper } from "@/src/components/molecules";
 
 interface LocationInputProps <T extends FieldValues> {
@@ -15,10 +23,18 @@ interface LocationInputProps <T extends FieldValues> {
   disabled?: boolean;
   errorText?: string;
   defaultLocation?: string;
+  countryLayer?: boolean;
 };
 
 const LocationInput = <T extends FieldValues>({ 
-  placeholder, label, name, control, disabled, errorText, defaultLocation
+  placeholder, 
+  label, 
+  name, 
+  control, 
+  disabled, 
+  errorText, 
+  defaultLocation, 
+  countryLayer = false,
 }: LocationInputProps<T>) => {
   const [autocompleteSuggestions, setAutocompleteSuggestions] 
   = useState<RadarAutocompleteAddress[]>([]);
@@ -27,8 +43,10 @@ const LocationInput = <T extends FieldValues>({
     Radar.initialize(process.env.NEXT_PUBLIC_RADAR_KEY as string);
   }, []);
 
-  const handleLocationChange = async (
-    e: React.ChangeEvent<HTMLInputElement>
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const handleLocationChange = useCallback(debounce(async (
+    e: React.ChangeEvent<HTMLInputElement>,
+    field: ControllerRenderProps<T, Path<T>>,
   ) => {
     e.preventDefault();
     const value = e.target.value;
@@ -36,15 +54,16 @@ const LocationInput = <T extends FieldValues>({
     if (value.trim() !== "") {
       const suggestions = await Radar.autocomplete({
         query: value,
-        layers: ["locality"],
+        layers: countryLayer ? ["locality", "country"] : ["locality"],
         limit: 5,
       });
 
       setAutocompleteSuggestions(suggestions.addresses);
     } else {
       setAutocompleteSuggestions([]);
+      field.onChange(null);
     }
-  };
+  }, 300), []);
 
   const [value, setValue] = useState(defaultLocation || '');
   const locationFieldValue = useWatch({control, name});
@@ -60,8 +79,6 @@ const LocationInput = <T extends FieldValues>({
       label={label}
       control={control}
       name={name}
-      isLabelVisible
-      isErrorLabelVisible
     >
       {(field) => (
         <div className="relative flex w-full flex-col">
@@ -73,8 +90,8 @@ const LocationInput = <T extends FieldValues>({
             placeholder={placeholder ? placeholder : `Enter your ${name}`}
             value={value}
             onChange={(e) => {
-              handleLocationChange(e);
               setValue(e.target.value);
+              handleLocationChange(e, field);
             }}
             className={twMerge(
               `border border-gray-50 bg-white placeholder:text-gray-50
@@ -95,11 +112,16 @@ const LocationInput = <T extends FieldValues>({
                   className="cursor-pointer px-4 py-2 text-sm hover:bg-gray-10"
                   onClick={() => {
                     field.onChange(address);
-                    setValue(`${address.city}, ${address.country}`);
+                    setValue(
+                      `${address.city ? `${address.city}, ` : ''}${address.country}`
+                    );
                     setAutocompleteSuggestions([]);
                   }}
                 >
-                  {`${address.city}, ${address.state}, ${address.country}`}
+                  {`${address.city ? `${address.city}, ` : ''}
+                    ${address.state ? `${address.state}, ` : ''}
+                    ${address.country}`
+                  }
                 </div>
               ))}
             </div>

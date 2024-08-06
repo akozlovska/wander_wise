@@ -49,7 +49,6 @@ const ChangeCollectionNameForm: React.FC<ChangeCollectionNameFormProps>
         name: newName, 
         cardIds: collection.cardDtos.map(card => card.id),
         id: collection.id,
-        isPublic: collection.isPublic,
       }, {
         onError: (e) => setErrorMessage(e),
         onSuccess: closeModal,

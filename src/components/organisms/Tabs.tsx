@@ -8,10 +8,11 @@ import { ICardTabs } from "@/src/services";
 
 interface TabsProps {
   tabs: ICardTabs;
+  mapLink: string;
   location: 'Page' | 'Card',
 }
 
-const Tabs: React.FC<TabsProps> = ({ tabs, location }) => {
+const Tabs: React.FC<TabsProps> = ({ tabs, mapLink, location }) => {
   const [active, setActive] 
   = useState<keyof ICardTabs>('Description');
   const displayedReasons = location === 'Card'
@@ -23,12 +24,12 @@ const Tabs: React.FC<TabsProps> = ({ tabs, location }) => {
   
   useEffect(() => {
     if (mapContainerRef.current && active === 'Map') {
-      setMapHeight(mapContainerRef.current.clientHeight - 90);
+      setMapHeight(mapContainerRef.current.clientHeight);
     }
   }, [active]);
 
   return (
-    <div className="flex h-full w-full flex-col gap-2" ref={mapContainerRef}>
+    <div className="flex h-full w-full flex-col gap-2">
       <div className="flex justify-between">
         {Object.keys(tabs).map((tab) => (
           <li
@@ -67,23 +68,31 @@ const Tabs: React.FC<TabsProps> = ({ tabs, location }) => {
 
       <div 
         className={twMerge(
-          'overflow-y-scroll', 
+          'grow overflow-y-scroll', 
           location === 'Card' && 'overflow-y-hidden line-clamp-4'
         )} 
+        ref={mapContainerRef}
       >
         {active === 'Description' && (
           <TextBase 
             text={tabs['Description']} 
             font="normal" 
+            classes="break-words"
           />
         )}
 
         {active === 'Why this place?' && (
           <ul className="flex w-full flex-col gap-2">
             {displayedReasons.map(reason => (
-              <li key={reason} className="flex w-full items-center gap-3">
-                <div className="h-2 w-2 rounded-full bg-gray-80" />
-                <TextBase text={reason} font="normal" />
+              <li key={reason} className="flex w-full items-start gap-3">
+                <div 
+                  className="my-2 h-2 w-2 shrink-0 rounded-full bg-gray-80" 
+                />
+                <TextBase 
+                  text={reason} 
+                  font="normal" 
+                  classes="overflow-hidden break-words" 
+                />
               </li>
             ))}
           </ul>
@@ -93,16 +102,17 @@ const Tabs: React.FC<TabsProps> = ({ tabs, location }) => {
           <Map coordinates={tabs['Map']} height={`${mapHeight}px`} />
         )}
 
-        {tabs["Distance"] && active === 'Distance' && (
+        {typeof tabs["Distance"] === 'number' && active === 'Distance' && (
           <div className="flex flex-col gap-2 py-4">
-            {!!tabs["Distance"].value && (
+            {tabs["Distance"] > 0 && (
               <TextBase 
-                text={`This place is ${tabs["Distance"].value} km from you.`} 
+                text={`This place is ${tabs["Distance"]} km from you.`} 
                 font="normal" 
               />
             )}
+
             <a 
-              href={tabs["Distance"].mapsLink} 
+              href={mapLink} 
               target="_blank" 
               className="text-base font-semibold text-black"
             >
@@ -111,6 +121,16 @@ const Tabs: React.FC<TabsProps> = ({ tabs, location }) => {
           </div>
         )}
       </div>
+
+      {tabs["Map"] && active === 'Map' && (
+        <a 
+          href={mapLink} 
+          target="_blank" 
+          className="pt-2 text-base font-semibold text-black"
+        >
+          Check it out at Google Maps!
+        </a>
+      )}
     </div>
   );
 };

@@ -26,6 +26,14 @@ class CollectionService {
   deleteCollection(collectionId: number) {
     return authClient.delete(`${this.BASE_URL}/${collectionId}`);
   }
+
+  hideCollection(collectionId: number) {
+    return authClient.get(`${this.BASE_URL}/${collectionId}/make-private`);
+  }
+
+  revealCollection(collectionId: number) {
+    return authClient.get(`${this.BASE_URL}/${collectionId}/make-public`);
+  }
 }
 
 export const collectionService = new CollectionService();

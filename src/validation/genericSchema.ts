@@ -92,7 +92,9 @@ export const genericValidationSchema = {
     .min(1, 'You must provide at least one reason')
     .of(Yup.string().trim().required()),
   travelDistance: Yup.string().trim()
-    .oneOf(Object.values(TravelDistance)).required(`Travel distance ${requiredText}`),
+    .transform((val, orig) => orig === "" ? undefined : val)
+    .required(`Travel distance ${requiredText}`)
+    .oneOf(Object.values(TravelDistance)),
   specialRequirements: Yup.array().required(`Special requirements ${requiredText}`)
     .of(Yup.string().trim()
       .oneOf(Object.values(SpecialRequirements)).required()),

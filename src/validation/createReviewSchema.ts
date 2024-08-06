@@ -6,5 +6,5 @@ export const reviewSchema
   Yup.object().shape({
     text: genericValidationSchema.description
       .required('Review text is required'),
-    stars: Yup.number().min(1).max(5).required('You have to rate the card'),
+    stars: Yup.number().min(1, 'You have to rate the card').max(5).required(),
   });

@@ -55,7 +55,6 @@ const AddCardToCollectionForm: React.FC<AddCardToCollectionFormProps>
         mutate({
           id: collection.id,
           name: collection.name,
-          isPublic: collection.isPublic,
           cardIds: [...collection.cardDtos.map(c => c.id), cardId]
         }, {
           onError: (e) => setErrorMessage(e),
@@ -75,14 +74,14 @@ const AddCardToCollectionForm: React.FC<AddCardToCollectionFormProps>
           {collectionsWithoutCard.map(collection => (
             <div
               key={collection.id}
-              className="flex w-full items-center justify-between"
+              className="flex w-full items-center justify-between gap-4"
             >
-              <div className="flex items-center gap-2">
-                <Icons.folder className="h-6 w-6" />
+              <div className="flex items-center gap-2 truncate">
+                <Icons.folder className="h-6 w-6 shrink-0" />
                 <Heading4 
                   text={collection.name} 
                   font="normal" 
-                  classes="text-gray-80" 
+                  classes="text-gray-80 truncate" 
                 />
               </div>
 

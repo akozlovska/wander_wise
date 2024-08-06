@@ -27,7 +27,7 @@ import { GiRobotAntennas } from "react-icons/gi";
 import { TiArrowLeftThick, TiArrowRightThick } from "react-icons/ti";
 import { FiEdit2, FiGlobe } from "react-icons/fi";
 import { GrLocation } from "react-icons/gr";
-import { RiDeleteBinLine, RiGlobalLine } from "react-icons/ri";
+import { RiDeleteBinLine, RiGlobalLine, RiQuestionFill } from "react-icons/ri";
 import { FaRegEye, FaRegEyeSlash, FaCheck } from "react-icons/fa6";
 import { TbLayoutListFilled } from "react-icons/tb";
 
@@ -64,6 +64,7 @@ const Icons = {
   folder: MdOutlineFolder,
   list: TbLayoutListFilled,
   gallery: HiMiniSquares2X2,
+  question: RiQuestionFill,
 };
 
 export default Icons;

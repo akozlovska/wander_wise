@@ -25,8 +25,6 @@ const TextAreaInput = <T extends FieldValues>({
       label={label}
       control={control}
       name={name}
-      isLabelVisible
-      isErrorLabelVisible
     >
       {(field) => (
         <div className={twMerge(

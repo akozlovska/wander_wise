@@ -7,7 +7,7 @@ import { trimObjectFields } from "@/src/lib/helpers";
 import { useCreateCollection } from "@/src/queries";
 import { ErrorText } from "@/src/components/atoms";
 import { 
-  PrimaryButton, 
+  UnstyledButton, 
   TextInput,
 } from "@/src/components/molecules";
 import { createCollectionShortSchema } from "@/src/validation";
@@ -52,7 +52,7 @@ const CreateCollectionShortForm: React.FC<CreateCollectionShortFormProps>
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="flex w-full flex-col gap-2"
+      className="flex w-full flex-col gap-4"
     >
       <div className="w-full">
         <TextInput
@@ -65,9 +65,9 @@ const CreateCollectionShortForm: React.FC<CreateCollectionShortFormProps>
         />
       </div>     
 
-      <PrimaryButton 
+      <UnstyledButton 
         type="submit" 
-        text="Create" 
+        text="Create collection" 
         disabled={isPending} 
         classes="w-full h-10"
       />

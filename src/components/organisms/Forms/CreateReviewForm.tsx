@@ -51,7 +51,11 @@ const CreateReviewForm: React.FC<CreateReviewFormProps> = ({ closeModal }) => {
       onSubmit={handleSubmit(onSubmit)}
       className="flex w-full flex-col gap-6"
     >
-      <StarsInput control={control} name="stars" />
+      <StarsInput 
+        control={control} 
+        name="stars" 
+        errorText={errors.stars?.message} 
+      />
 
       <TextAreaInput 
         control={control} 

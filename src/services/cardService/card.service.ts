@@ -59,9 +59,17 @@ class CardService {
     return authClient.get(`${this.BASE_URL}/remove-like/${cardId}`);
   }
 
+  hideCard(cardId: number) {
+    return authClient.get(`${this.BASE_URL}/hide-card/${cardId}`);
+  }
+
+  revealCard(cardId: number) {
+    return authClient.get(`${this.BASE_URL}/reveal-card/${cardId}`);
+  }
+
   deleteCard(id: number) {
     return authClient.delete(`${this.BASE_URL}/${id}`);
-  };
+  }
 
   searchCards(page: number, data: ISearchCard, signal: AbortSignal) {
     return baseClient.post<never, ISearchCardResponse>(
@@ -69,7 +77,7 @@ class CardService {
       data,
       { signal }
     );
-  };
+  }
 
   getPopular(signal: AbortSignal) {
     return baseClient.get<never, ICard[]>(

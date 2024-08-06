@@ -4,7 +4,7 @@ const CardsSkeleton = () => {
   const cards = new Array(3).fill(1);
 
   return (
-    <div className="m-auto flex w-full flex-col gap-8">
+    <div className="m-auto flex flex-col gap-8">
       <Heading5 
         text="Generating cards for you. This might take a couple of minutes..." 
         font="medium"
@@ -12,8 +12,8 @@ const CardsSkeleton = () => {
       />
 
       <div 
-        className="col-span-3 col-start-2 row-start-2 grid w-full 
-        grid-cols-[repeat(auto-fill,325px)] justify-center gap-x-5 gap-y-6"
+        className="grid grid-cols-[repeat(3,325px)] 
+        justify-center gap-x-5 gap-y-6"
       >
         {cards.map((card, i) => (
           <article

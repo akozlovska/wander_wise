@@ -31,8 +31,6 @@ const TextInput = <T extends FieldValues>({
       label={label}
       control={control}
       name={name}
-      isLabelVisible={!!label}
-      isErrorLabelVisible
     >
       {(field) => (
         <div className="relative flex w-full flex-col">

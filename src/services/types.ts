@@ -44,6 +44,7 @@ export enum TravelDistance {
   'Region' = 'Region',
   'Country' = 'Country',
   'Continent' = 'Continent',
+  'Specific Place' = 'Specific',
 }
 
 export type TravelDistanceType = `${TravelDistance}`;
@@ -60,7 +61,7 @@ export interface ICardTabs {
   'Description': string,
   'Why this place?': string[],
   'Map'?: { latitude: number, longitude: number},
-  'Distance'?: { value: number, mapsLink: string },
+  'Distance'?: number,
 }
 
 export enum TripsPageView {
