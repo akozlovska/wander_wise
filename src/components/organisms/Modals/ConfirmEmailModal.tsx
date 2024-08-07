@@ -1,17 +1,13 @@
 import { memo } from "react";
 import { ConfirmEmailForm, ModalTemplate } from "@/src/components/organisms";
 
-interface ConfirmEmailModalProps {
-  onClose: () => void;
-}
-
-const ConfirmEmailModal: React.FC<ConfirmEmailModalProps> = ({ onClose }) => {
+const ConfirmEmailModal = () => {
   return (
-    <ModalTemplate onClose={onClose}
+    <ModalTemplate
       title="Confirm your email"
       subtitle="Enter the confirmation code sent to your email 🤔"
     >
-      <ConfirmEmailForm closeModal={onClose} />
+      <ConfirmEmailForm />
     </ModalTemplate>
   );
 };

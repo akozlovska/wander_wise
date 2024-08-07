@@ -1,26 +1,16 @@
 /* eslint-disable max-len */
 "use client";
 
-import { useState } from "react";
-import { AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
-import { useUser } from "@/src/store/user";
-import {
-  ConfirmEmailModal,
-  RestorePasswordModal,
-  SignInModal,
-  SignUpModal,
-} from "@/src/components/organisms";
 import { Navbar, RoundedButton, UnstyledButton } from "@/src/components/molecules";
 import { Routes } from "@/src/lib/constants";
+import { useUser, useModal } from "@/src/store";
+import { Modal } from "@/src/services";
 
 const Header: React.FC = () => {
   const { user } = useUser();
-  const [isShowSignInModal, setIsShowSignInModal] = useState(false);
-  const [isShowSignUpModal, setIsShowSignUpModal] = useState(false);
-  const [isShowConfirmEmailModal, setIsShowConfirmEmailModal] = useState(false);
-  const [isShowRestorePasswordModal, setIsShowRestorePasswordModal] = useState(false);
+  const { setOpenModal } = useModal();
 
   return (
     <header
@@ -41,54 +31,17 @@ const Header: React.FC = () => {
         <div className="flex items-center gap-8">
           <UnstyledButton 
             text="Login"
-            onClick={() => setIsShowSignInModal(true)}
+            onClick={() => setOpenModal(Modal.SIGN_IN)}
             classes="w-16"
           />
           <RoundedButton 
             text="Sign Up" 
             style="dark" 
             classes="w-36" 
-            onClick={() => setIsShowSignUpModal(true)} 
+            onClick={() => setOpenModal(Modal.SIGN_UP)} 
           />
         </div>
       )}
-
-      <AnimatePresence>
-        {isShowSignInModal && (
-          <SignInModal
-            key="signInModal"
-            onClose={() => setIsShowSignInModal(false)}
-            onOpenSignUp={() => setIsShowSignUpModal(true)}
-            onOpenRestorePassword={() => setIsShowRestorePasswordModal(true)}
-          />
-        )}
-
-        {isShowSignUpModal && (
-          <SignUpModal
-            key="signUpModal"
-            onClose={() => setIsShowSignUpModal(false)}
-            onOpenSignIn={() => setIsShowSignInModal(true)}
-            onOpenConfirmEmail={() => {
-              setIsShowConfirmEmailModal(true);
-            }}
-          />
-        )}
-
-        {isShowRestorePasswordModal && (
-          <RestorePasswordModal 
-            key="restorePasswordModal"
-            onClose={() => setIsShowRestorePasswordModal(false)}
-            onOpenSignIn={() => setIsShowSignInModal(true)}
-          />
-        )}
-
-        {isShowConfirmEmailModal && (
-          <ConfirmEmailModal
-            key="confirmEmailModal" 
-            onClose={() => setIsShowConfirmEmailModal(false)}
-          />
-        )}
-      </AnimatePresence>
     </header>
   );
 };

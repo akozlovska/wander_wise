@@ -3,7 +3,7 @@
 import { SubmitHandler, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useRouter } from "next/navigation";
-import { ISignIn } from "@/src/services";
+import { ISignIn, Modal } from "@/src/services";
 import { signInSchema } from "@/src/validation";
 import { 
   PrimaryButton, 
@@ -16,14 +16,10 @@ import { ErrorText } from "@/src/components/atoms";
 import { PasswordInput } from "@/src/components/molecules";
 import { useNormalizedError } from "@/src/hooks";
 import { Routes } from "@/src/lib/constants";
+import { useModal } from "@/src/store";
 
-interface SignInFormProps {
-  closeModal: () => void;
-  openRestorePasswordModal: () => void;
-}
-
-const SignInForm: React.FC<SignInFormProps> 
-= ({ closeModal, openRestorePasswordModal }) => {
+const SignInForm = () => {
+  const { closeModal, setOpenModal } = useModal();
   const [errorMessage, setErrorMessage] = useNormalizedError();
   const validationSchema = signInSchema();
 
@@ -81,7 +77,9 @@ const SignInForm: React.FC<SignInFormProps>
           text="Forgot password?"
           classes="font-medium self-start 
           text-blue underline hover:text-[#0D00CC]"
-          onClick={openRestorePasswordModal}
+          onClick={() => setOpenModal(
+            Modal.RESTORE_PASSWORD, { isOpenSignIn: true }
+          )}
         />
       </div>
 

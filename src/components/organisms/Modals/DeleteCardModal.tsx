@@ -6,16 +6,16 @@ import { ErrorText } from "@/src/components/atoms";
 import { RoundedButton } from "@/src/components/molecules";
 import { useDeleteCard } from "@/src/queries";
 import { useNormalizedError } from "@/src/hooks";
+import { useModal } from "@/src/store";
 
 interface DeleteCardModalProps {
-  onClose: () => void;
   cardId: number;
 }
 
 const DeleteCardModal: React.FC<DeleteCardModalProps> = ({
-  onClose,
   cardId,
 }) => {
+  const { closeModal } = useModal();
   const { isPending, mutate } = useDeleteCard();
 
   const [errorMessage, setErrorMessage] = useNormalizedError();
@@ -23,13 +23,12 @@ const DeleteCardModal: React.FC<DeleteCardModalProps> = ({
   const handleDeleteCard = () => {
     mutate(cardId, { 
       onError: (e) => setErrorMessage(e),
-      onSuccess: onClose,
+      onSuccess: closeModal,
     });
   };
 
   return (
     <ModalTemplate 
-      onClose={onClose}
       title="Delete your card?"
       subtitle="This action cannot be undone 🫣"
     >
@@ -42,7 +41,7 @@ const DeleteCardModal: React.FC<DeleteCardModalProps> = ({
         />
         <RoundedButton
           text="Cancel"
-          onClick={onClose}
+          onClick={closeModal}
           style="light"
         />
       </div>

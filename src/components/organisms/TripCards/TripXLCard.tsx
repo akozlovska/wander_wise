@@ -1,7 +1,7 @@
 "use client";
 
-import { forwardRef, memo, Ref, useState } from "react";
-import { AnimatePresence, motion } from "framer-motion";
+import { forwardRef, memo, Ref } from "react";
+import { motion } from "framer-motion";
 import Link from "next/link";
 import { 
   TripImage, 
@@ -17,11 +17,11 @@ import {
   Divider, 
   Icons 
 } from "@/src/components/atoms";
-import { Tabs, CreateReportModal } from "@/src/components/organisms";
+import { Tabs } from "@/src/components/organisms";
 import { useCopyUrlToClipboard } from "@/src/hooks";
 import { Routes } from "@/src/lib/constants";
-import { ICard, ICardTabs } from "@/src/services";
-import { useUser } from "@/src/store/user";
+import { ICard, ICardTabs, Modal } from "@/src/services";
+import { useUser, useModal } from "@/src/store";
 
 interface TripXLCardProps {
   card: ICard;
@@ -30,12 +30,18 @@ interface TripXLCardProps {
 const TripXLCard: React.FC<TripXLCardProps> 
 = forwardRef(({ card }, ref: Ref<HTMLDivElement> | undefined) => {
   const { user } = useUser();
+  const { setOpenModal } = useModal();
   const [isCopied, copy] = useCopyUrlToClipboard(Routes.TRIP(card.id));
-  const [isReportCardModal, setIsReportCardModal] = useState(false);
   const tabs: ICardTabs = {
     'Description': card.description,
     'Why this place?': card.whyThisPlace,
     'Distance': card.distance,
+  };
+
+  const handleReport = () => {
+    user
+      ? setOpenModal(Modal.CREATE_REPORT, { type: 'Card' })
+      : setOpenModal(Modal.SIGN_UP);
   };
 
   return (
@@ -126,15 +132,10 @@ const TripXLCard: React.FC<TripXLCardProps>
           />
 
           <IconButton
-            icon={
-              <Icons.report 
-                className="h-5 w-5 text-inherit" 
-              />
-            }
+            icon={<Icons.report className="h-5 w-5 text-inherit" />}
+            onClick={handleReport}
             text="Report"
             classes="text-gray-80 gap-2 disabled:text-gray-50"
-            onClick={() => setIsReportCardModal(true)}
-            disabled={!user}
           />
         </div>
 
@@ -142,16 +143,6 @@ const TripXLCard: React.FC<TripXLCardProps>
 
         <SaveButton cardId={card.id} />
       </div>
-
-      <AnimatePresence>
-        {isReportCardModal && (
-          <CreateReportModal
-            key="createReportModal"
-            type="Card" 
-            onClose={() => setIsReportCardModal(false)} 
-          />
-        )}
-      </AnimatePresence>
     </motion.article>
   );
 });

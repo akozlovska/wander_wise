@@ -4,16 +4,23 @@ import React, { memo, useEffect } from "react";
 import { createPortal } from "react-dom";
 import { motion } from "framer-motion";
 import { Heading, Heading4 } from "@/src/components/atoms";
+import { useModal } from "@/src/store";
 
 interface ModalTemplateProps {
   children: React.ReactNode;
-  onClose: (toClose: boolean) => void;
   title?: string;
   subtitle?: string;
+  isClosable?: boolean;
 }
 
 const ModalTemplate: React.FC<ModalTemplateProps> 
-= ({ children, onClose, title, subtitle }) => {
+= ({ children, title, subtitle, isClosable = true }) => {
+  const { closeModal } = useModal();
+  const handleBackgroundClick = () => {
+    if (isClosable) {
+      closeModal();
+    }
+  };
 
   useEffect(() => {
     document.body.classList.add('overflow-hidden');
@@ -30,8 +37,7 @@ const ModalTemplate: React.FC<ModalTemplateProps>
         h-full w-full items-center justify-center"
     >
       <button
-        id="close"
-        onClick={() => onClose(true)}
+        onClick={handleBackgroundClick}
         className="h-full w-full bg-gray-50
         bg-opacity-50 backdrop-blur-sm"
       />

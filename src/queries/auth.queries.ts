@@ -1,7 +1,7 @@
 import { useMutation } from "@tanstack/react-query";
 import { getCookie, deleteCookie, setCookie } from "cookies-next";
 import { authService, IEmail, ISignIn, ISignUp } from "@/src/services";
-import { useUser } from "@/src/store/user";
+import { useUser } from "@/src/store";
 
 export function useSignUp() {
   return useMutation({

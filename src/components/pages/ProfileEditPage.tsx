@@ -1,42 +1,18 @@
 'use client';
 
-import { useState } from "react";
-import { AnimatePresence } from "framer-motion";
-import { useUser } from "@/src/store/user";
+import { useUser, useModal } from "@/src/store";
 import { Divider, Heading2, Heading5, TextBase } from "@/src/components/atoms";
 import { PrimaryButton, RoundedButton } from "@/src/components/molecules";
 import { 
-  ChangeUserEmailModal, 
-  ChangeUserPasswordModal, 
-  RestorePasswordModal,
   ProfileEditForm,
   SocialLinkForm,
-  ConfirmEmailModal,
-  DeleteProfileModal
 } from "@/src/components/organisms";
 import { StandardPageLayout } from "@/src/components/templates";
+import { Modal } from "@/src/services";
 
 const ProfileEditPage = () => {
   const { user } = useUser();
-
-  const [isShowChangeEmailModal, setIsShowChangeEmailModal] = useState(false);
-  const [isShowChangePassModal, setIsShowChangePassModal] = useState(false);
-  const [isShowRestorePasswordModal, setIsShowRestorePasswordModal] 
-  = useState(false);
-  const [isShowConfirmEmailModal, setIsShowConfirmEmailModal] 
-  = useState(false);
-  const [isShowDeleteProfileModal, setIsShowDeleteProfileModal] 
-  = useState(false);
-
-  const handleRestorePassOpen = () => {
-    setIsShowChangePassModal(false);
-    setIsShowRestorePasswordModal(true);
-  };
-
-  const handleConfirmEmailOpen = () => {
-    setIsShowChangeEmailModal(false);
-    setIsShowConfirmEmailModal(true);
-  };
+  const { setOpenModal } = useModal();
 
   return (
     <StandardPageLayout>
@@ -65,7 +41,7 @@ const ProfileEditPage = () => {
             <div className="w-32">
               <PrimaryButton 
                 text="Change" 
-                onClick={() => setIsShowChangeEmailModal(true)}
+                onClick={() => setOpenModal(Modal.CHANGE_EMAIL)}
                 classes="h-10" 
               />
             </div>
@@ -83,7 +59,7 @@ const ProfileEditPage = () => {
             <div className="w-32">
               <PrimaryButton 
                 text="Change" 
-                onClick={() => setIsShowChangePassModal(true)} 
+                onClick={() => setOpenModal(Modal.CHANGE_PASSWORD)} 
                 classes="h-10"
               />
             </div>
@@ -111,48 +87,9 @@ const ProfileEditPage = () => {
         <RoundedButton 
           text="Delete profile" 
           style="red"
-          onClick={() => setIsShowDeleteProfileModal(true)}
+          onClick={() => setOpenModal(Modal.DELETE_PROFILE)}
         />
       </div>
-
-      <AnimatePresence>
-        {isShowChangeEmailModal && (
-          <ChangeUserEmailModal
-            key="changeUserEmailModal"
-            onClose={() => setIsShowChangeEmailModal(false)}
-            onOpenConfirmEmail={handleConfirmEmailOpen}
-          />
-        )}
-
-        {isShowChangePassModal && (
-          <ChangeUserPasswordModal
-            key="changeUserPasswordModal"
-            onClose={() => setIsShowChangePassModal(false)}
-            onOpenRestorePasswordModal={handleRestorePassOpen}
-          />
-        )}
-
-        {isShowRestorePasswordModal && (
-          <RestorePasswordModal 
-            key="restorePasswordModal"
-            onClose={() => setIsShowRestorePasswordModal(false)}
-          />
-        )}
-
-        {isShowConfirmEmailModal && (
-          <ConfirmEmailModal
-            key="confirmEmailModal"
-            onClose={() => setIsShowConfirmEmailModal(false)}
-          />
-        )}
-
-        {isShowDeleteProfileModal && (
-          <DeleteProfileModal 
-            key="deleteProfileModal"
-            onClose={() => setIsShowDeleteProfileModal(false)}
-          />
-        )}
-      </AnimatePresence>
     </StandardPageLayout>
   );
 };

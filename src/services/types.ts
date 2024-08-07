@@ -68,3 +68,25 @@ export enum TripsPageView {
   Gallery,
   List,
 }
+
+export enum Modal {
+  ADD_CARD_IMAGES = 'addCardImages',
+  ADD_CARD_TO_COLLECTION = 'addCardToCollection',
+  ADD_PROFILE_IMAGE = 'addProfileImage',
+  CHANGE_EMAIL = 'changeEmail',
+  CHANGE_PASSWORD = 'changePassword',
+  CONFIRM_EMAIL = 'confirmEmail',
+  CREATE_REPORT = 'createReport',
+  DELETE_CARD = 'deleteCard',
+  DELETE_COLLECTION = 'deleteCollection',
+  DELETE_PROFILE = 'deleteProfile',
+  CREATE_REVIEW = 'createReview',
+  DELETE_REVIEW = 'deleteReview',
+  EDIT_REVIEW = 'editReview',
+  EMPTY_FALLBACK = 'emptyFallback',
+  REMOVE_CARD_FROM_COLLECTION = 'removeCardFromCollection',
+  RENAME_COLLECTION = 'renameCollection',
+  RESTORE_PASSWORD = 'restorePassword',
+  SIGN_IN = 'signIn',
+  SIGN_UP = 'signUp',
+}

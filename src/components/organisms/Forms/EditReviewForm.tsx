@@ -12,16 +12,17 @@ import {
   TextAreaInput, 
   StarsInput, 
 } from "@/src/components/molecules";
+import { useModal } from "@/src/store";
 
 interface EditReviewFormProps {
-  closeModal: () => void,
   review: IComment,
 }
 
 type EditReviewFormData = Omit<IUpdateComment, 'id' | 'cardId'>;
 
 const EditReviewForm: React.FC<EditReviewFormProps> 
-= ({ closeModal, review }) => {
+= ({ review }) => {
+  const { closeModal } = useModal();
   const [errorMessage, setErrorMessage] = useNormalizedError();
   const validationSchema = reviewSchema();
 

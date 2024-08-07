@@ -4,21 +4,10 @@ import {
   UploadProfileImageForm 
 } from "@/src/components/organisms";
 
-interface AddProfileImageModalProps {
-  onClose: () => void;
-}
-
-const AddProfileImageModal: React.FC<AddProfileImageModalProps> = ({
-  onClose,
-}) => {
+const AddProfileImageModal = () => {
   return (
-    <ModalTemplate 
-      onClose={onClose}
-      title="Edit your profile picture"
-    >
-      <UploadProfileImageForm
-        closeModal={onClose}
-      />
+    <ModalTemplate title="Edit your profile picture">
+      <UploadProfileImageForm />
     </ModalTemplate>
   );
 };

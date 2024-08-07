@@ -13,12 +13,10 @@ import { useNormalizedError } from "@/src/hooks";
 import { selectOtherCollections } from "@/src/lib/collectionSelectors";
 
 interface AddCardToCollectionModalProps {
-  onClose: () => void;
   card: ICard;
 }
 
 const AddCardToCollectionModal: React.FC<AddCardToCollectionModalProps> = ({
-  onClose,
   card,
 }) => {
   const [errorMessage, setErrorMessage] = useNormalizedError();
@@ -36,7 +34,7 @@ const AddCardToCollectionModal: React.FC<AddCardToCollectionModalProps> = ({
   }, [error, setErrorMessage]);
 
   return (
-    <ModalTemplate onClose={onClose}>
+    <ModalTemplate>
       <div className="flex w-full flex-col gap-8">
         <h1 className="text-4xl font-normal leading-normal">
           Add “
@@ -57,7 +55,6 @@ const AddCardToCollectionModal: React.FC<AddCardToCollectionModalProps> = ({
 
         {!!collections?.length && (
           <AddCardToCollectionForm
-            closeModal={onClose}
             cardId={card.id}
             collections={collections}
           />

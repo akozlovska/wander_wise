@@ -92,14 +92,15 @@ const InfiniteList: React.FC<InfiniteListProps>
       grid-cols-[1fr,210px] justify-items-center overflow-y-scroll"
     >
       <div 
-        className="relative flex h-[814px] w-full 
+        className="relative flex h-[814px] 
         items-end justify-center self-center"
       >
         <AnimatePresence mode="popLayout">
           <TripXLCard key={selectedCard} card={allCards[selectedCard]} /> 
         </AnimatePresence>
         <div 
-          className="absolute bottom-0 right-12 flex h-fit w-fit flex-col gap-5"
+          className="absolute -right-14 bottom-0 
+          flex h-fit w-fit flex-col gap-5"
         >
           <IconButton 
             icon={<Icons.up className="h-8 w-8 text-inherit"/>}

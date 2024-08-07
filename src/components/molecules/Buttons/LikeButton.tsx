@@ -8,9 +8,9 @@ import {
 } from "@/src/queries";
 import { Icons } from "@/src/components/atoms";
 import { IconButton } from "@/src/components/molecules";
-import { useUser } from "@/src/store/user";
+import { useModal, useUser } from "@/src/store";
 import { selectLikedCards } from "@/src/lib/collectionSelectors";
-import { ICollection } from "@/src/services";
+import { ICollection, Modal } from "@/src/services";
 
 interface LikeButtonProps {
   cardLikes: number,
@@ -21,6 +21,7 @@ interface LikeButtonProps {
 const LikeButton: React.FC<LikeButtonProps> 
 = ({ cardId, cardLikes, classes }) => {
   const { user } = useUser();
+  const { setOpenModal } = useModal();
   const { mutate: like } = useLikeCard();
   const { mutate: removeLike } = useRemoveLikeFromCard();
   const [likes, setLikes] = useState(cardLikes);
@@ -40,31 +41,27 @@ const LikeButton: React.FC<LikeButtonProps>
   }, [likedCollection, isCardLikedByUser]);
 
   const handleLikeClick = useCallback(() => {
-    const previousLikes = likes;
-    const previousIsLiked = isLiked;
+    if (user) {
+      const previousLikes = likes;
+      const previousIsLiked = isLiked;
+      const handleError = () => {
+        setLikes(previousLikes);
+        setIsLiked(previousIsLiked);
+      };
 
-    if (isLiked) {
-      setLikes(curr => Math.max(0, curr - 1));
-      setIsLiked(false);
-
-      removeLike(cardId, {
-        onError: () => {
-          setLikes(previousLikes);
-          setIsLiked(previousIsLiked);
-        }
-      });
+      if (isLiked) {
+        setLikes(curr => Math.max(0, curr - 1));
+        setIsLiked(false);
+        removeLike(cardId, { onError: handleError });
+      } else {
+        setLikes(curr => curr + 1);
+        setIsLiked(true);
+        like(cardId, { onError: handleError });
+      }
     } else {
-      setLikes(curr => curr + 1);
-      setIsLiked(true);
-
-      like(cardId, {
-        onError: () => {
-          setLikes(previousLikes);
-          setIsLiked(previousIsLiked);
-        }
-      });
+      setOpenModal(Modal.SIGN_UP);
     }
-  }, [isLiked, likes, cardId, like, removeLike]);
+  }, [user, isLiked, likes, cardId, like, removeLike, setOpenModal]);
 
   return (
     <IconButton
@@ -72,7 +69,6 @@ const LikeButton: React.FC<LikeButtonProps>
       text={likes.toString()}
       classes={classes}
       onClick={handleLikeClick}
-      disabled={!user}
     />
   );
 };

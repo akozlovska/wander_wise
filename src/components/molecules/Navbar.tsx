@@ -2,7 +2,7 @@ import { usePathname } from 'next/navigation';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Divider, Heading5 } from '@/src/components/atoms';
-import { useUser } from '@/src/store/user';
+import { useUser } from '@/src/store';
 import { Routes } from '@/src/lib/constants';
 
 const Navbar = () => {

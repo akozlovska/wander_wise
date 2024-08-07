@@ -4,21 +4,10 @@ import {
   ChangeCollectionNameForm
 } from "@/src/components/organisms";
 
-interface RenameCollectionModalProps {
-  onClose: () => void;
-}
-
-const RenameCollectionModal: React.FC<RenameCollectionModalProps> = ({
-  onClose,
-}) => {
+const RenameCollectionModal = () => {
   return (
-    <ModalTemplate 
-      onClose={onClose}
-      title="Change collection name"
-    >
-      <ChangeCollectionNameForm
-        closeModal={onClose}
-      />
+    <ModalTemplate title="Change collection name">
+      <ChangeCollectionNameForm />
     </ModalTemplate>
   );
 };

@@ -15,7 +15,7 @@ import {
   IReportCard,
   cardService,
 } from "@/src/services";
-import { useUser } from "@/src/store/user";
+import { useUser } from "@/src/store";
 import { CARDS_PER_PAGE } from "@/src/lib/constants";
 
 export function useGetCardDetails(cardId: number | null) {

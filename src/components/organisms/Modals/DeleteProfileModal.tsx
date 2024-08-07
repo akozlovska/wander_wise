@@ -6,14 +6,10 @@ import { ErrorText } from "@/src/components/atoms";
 import { RoundedButton } from "@/src/components/molecules";
 import { useDeleteUser } from "@/src/queries";
 import { useNormalizedError } from "@/src/hooks";
+import { useModal } from "@/src/store";
 
-interface DeleteProfileModalProps {
-  onClose: () => void;
-}
-
-const DeleteProfileModal: React.FC<DeleteProfileModalProps> = ({
-  onClose,
-}) => {
+const DeleteProfileModal = () => {
+  const { closeModal } = useModal();
   const { isPending, mutate } = useDeleteUser();
 
   const [errorMessage, setErrorMessage] = useNormalizedError();
@@ -21,13 +17,12 @@ const DeleteProfileModal: React.FC<DeleteProfileModalProps> = ({
   const handleDeleteProfile = () => {
     mutate(undefined, { 
       onError: (e) => setErrorMessage(e),
-      onSuccess: onClose,
+      onSuccess: closeModal,
     });
   };
 
   return (
     <ModalTemplate 
-      onClose={onClose}
       title="Delete your profile?"
       subtitle="This action cannot be undone 🫣"
     >
@@ -40,7 +35,7 @@ const DeleteProfileModal: React.FC<DeleteProfileModalProps> = ({
         />
         <RoundedButton
           text="Cancel"
-          onClick={onClose}
+          onClick={closeModal}
           style="light"
         />
       </div>

@@ -1,19 +1,23 @@
 "use client";
 
-import { memo, useState } from "react";
-import { AnimatePresence } from "framer-motion";
-import { ReviewCard, CreateReviewModal } from "@/src/components/organisms";
+import { memo } from "react";
+import { ReviewCard } from "@/src/components/organisms";
 import { Divider, Heading5, Heading3, Heading4 } from "@/src/components/atoms";
-import { IComment } from "@/src/services";
-import { useUser } from "@/src/store/user";
+import { IComment, Modal } from "@/src/services";
+import { useUser, useModal } from "@/src/store";
 
 interface ReviewsListProps {
   reviews: IComment[];
 };
 
 const ReviewsList: React.FC<ReviewsListProps> = ({ reviews }) => {
-  const [isPostReviewModal, setIsReviewModal] = useState(false);
   const { user } = useUser();
+  const { setOpenModal } = useModal();
+  const handlePostReview = () => {
+    user
+      ? setOpenModal(Modal.CREATE_REVIEW)
+      : setOpenModal(Modal.SIGN_UP);
+  };
 
   return (
     <div className="flex flex-col gap-6">
@@ -27,16 +31,12 @@ const ReviewsList: React.FC<ReviewsListProps> = ({ reviews }) => {
 
         <button
           type="button"
-          onClick={() => setIsReviewModal(true)}
-          disabled={!user || user.banned}
+          onClick={handlePostReview}
         >
           <Heading5
             text="Post review" 
             font="semibold" 
-            classes={
-              "underline underline-offset-8 " 
-              + (user ? '' : 'text-gray-30')
-            }
+            classes="underline underline-offset-8"
           />
         </button>
       </div>
@@ -48,15 +48,6 @@ const ReviewsList: React.FC<ReviewsListProps> = ({ reviews }) => {
           <ReviewCard review={review} key={review.id} />
         ))}
       </div>
-
-      <AnimatePresence>
-        {isPostReviewModal && (
-          <CreateReviewModal
-            key="createReviewModal"
-            onClose={() => setIsReviewModal(false)}
-          />
-        )}
-      </AnimatePresence>
     </div>
   );
 };

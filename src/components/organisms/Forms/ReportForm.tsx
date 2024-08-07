@@ -10,9 +10,9 @@ import { ErrorText } from "@/src/components/atoms";
 import { TextAreaInput, PrimaryButton } from "@/src/components/molecules";
 import { reportCardSchema } from "@/src/validation";
 import { IComment } from "@/src/services";
+import { useModal } from "@/src/store";
 
 interface ReportFormProps {
-  closeModal: () => void;
   type: 'Card' | 'Comment';
   comment?: IComment;
 };
@@ -22,7 +22,8 @@ interface ReportFormData {
 }
 
 const ReportForm: React.FC<ReportFormProps> 
-= ({ closeModal, type, comment }) => {
+= ({ type, comment }) => {
+  const { closeModal } = useModal();
   const { id } = useParams();
   const [errorMessage, setErrorMessage] = useNormalizedError();
 

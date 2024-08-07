@@ -13,18 +13,14 @@ import {
   PrimaryButton, 
   RoundedButton 
 } from "@/src/components/molecules";
-import { useUser } from "@/src/store/user";
-
-interface UploadProfileImageFormProps {
-  closeModal: () => void;
-}
+import { useUser, useModal } from "@/src/store";
 
 interface UploadProfileImageFormData {
   image: File,
 }
 
-const UploadProfileImageForm: React.FC<UploadProfileImageFormProps> 
-= ({ closeModal }) => {
+const UploadProfileImageForm = () => {
+  const { closeModal } = useModal();
   const [errorMessage, setErrorMessage] = useNormalizedError();
   
   const validationSchema = uploadProfileImageSchema();

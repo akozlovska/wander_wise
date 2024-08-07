@@ -7,7 +7,7 @@ import {
   ICollection,
   userService 
 } from "@/src/services";
-import { useUser } from "@/src/store/user";
+import { useUser } from "@/src/store";
 import { Routes } from "@/src/lib/constants";
 
 export function useGetUserProfile(userId: number | null) {

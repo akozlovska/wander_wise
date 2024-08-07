@@ -1,7 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-import { AnimatePresence } from "framer-motion";
+import { useEffect } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import { Routes } from '@/src/lib/constants';
 import { useGetCollection } from '@/src/queries';
@@ -14,19 +13,17 @@ import {
   Heading4
 } from '@/src/components/atoms';
 import { IconButton } from '@/src/components/molecules';
-import { 
-  RenameCollectionModal, 
-  DeleteCollectionModal, 
-  Gallery,
-  PrivacyToggle
-} from '@/src/components/organisms';
+import { Gallery, PrivacyToggle } from '@/src/components/organisms';
 import { 
   StandardPageLayout,
   LoadingStateWrapper 
 } from '@/src/components/templates';
 import { useCopyUrlToClipboard } from '@/src/hooks';
+import { useModal } from '@/src/store';
+import { Modal } from '@/src/services';
 
 const CollectionPage = () => {
+  const { setOpenModal } = useModal();
   const { push } = useRouter();
   const { id } = useParams();
   const collectionId = +id;
@@ -36,9 +33,6 @@ const CollectionPage = () => {
     isError, 
     isLoading 
   } = useGetCollection(collectionId);
-
-  const [isRenameCollectionModal, setIsRenameCollectionModal] = useState(false);
-  const [isDeleteCollectionModal, setIsDeleteCollectionModal] = useState(false);
 
   const [isCopied, copy] = useCopyUrlToClipboard(
     Routes.COLLECTION(collectionId)
@@ -65,13 +59,13 @@ const CollectionPage = () => {
                 text="Rename collection" 
                 icon={<Icons.edit />} 
                 classes="border border-black rounded-full"
-                onClick={() => setIsRenameCollectionModal(true)}
+                onClick={() => setOpenModal(Modal.RENAME_COLLECTION)}
               />
               <IconButton 
                 text="Delete collection" 
                 icon={<Icons.delete />} 
                 classes="border border-error text-error rounded-full"
-                onClick={() => setIsDeleteCollectionModal(true)}
+                onClick={() => setOpenModal(Modal.DELETE_COLLECTION)}
               />
             </div>
 
@@ -116,23 +110,6 @@ const CollectionPage = () => {
           </>
         )}
       </LoadingStateWrapper>
-
-      <AnimatePresence>
-        {isRenameCollectionModal && (
-          <RenameCollectionModal
-            key="renameCollectionModal"
-            onClose={() => setIsRenameCollectionModal(false)} 
-          />
-        )}
-
-        {isDeleteCollectionModal && (
-          <DeleteCollectionModal
-            key="deleteCollectionModal"
-            onClose={() => setIsDeleteCollectionModal(false)} 
-            collectionId={collection!.id}
-          />
-        )}
-      </AnimatePresence>
     </StandardPageLayout>
   );
 };

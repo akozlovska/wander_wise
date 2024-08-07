@@ -7,16 +7,14 @@ import { ErrorText } from "@/src/components/atoms";
 import { useConfirmEmail, useUpdateEmail } from "@/src/queries";
 import { confirmEmailSchema } from "@/src/validation";
 import { useNormalizedError } from "@/src/hooks";
-
-interface ConfirmEmailFormProps {
-  closeModal: () => void;
-}
+import { useModal } from "@/src/store";
 
 interface ConfirmEmailFormData {
   confirmationCode: string,
 };
 
-const ConfirmEmailForm: React.FC<ConfirmEmailFormProps> = ({ closeModal }) => {
+const ConfirmEmailForm = () => {
+  const { closeModal } = useModal();
   const emailConfirmationType = localStorage.getItem('emailConfirmationType');
 
   const [errorMessage, setErrorMessage] = useNormalizedError();

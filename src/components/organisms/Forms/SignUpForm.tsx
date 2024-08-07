@@ -2,7 +2,7 @@
 
 import { SubmitHandler, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { ISignUp } from "@/src/services";
+import { ISignUp, Modal } from "@/src/services";
 import { signUpSchema } from "@/src/validation";
 import {
   PrimaryButton,
@@ -13,14 +13,10 @@ import { trimObjectFields } from "@/src/lib/helpers";
 import { ErrorText } from "@/src/components/atoms";
 import { PasswordInput } from "@/src/components/molecules";
 import { useNormalizedError } from "@/src/hooks";
+import { useModal } from "@/src/store";
 
-interface SignUpFormProps {
-  openConfirmEmailModal: () => void;
-  openSignInModal: () => void;
-}
-
-const SignUpForm: React.FC<SignUpFormProps> 
-= ({ openConfirmEmailModal, openSignInModal }) => {
+const SignUpForm = () => {
+  const { setOpenModal } = useModal();
   const [errorMessage, setErrorMessage] = useNormalizedError();
   const validationSchema = signUpSchema();
 
@@ -46,8 +42,8 @@ const SignUpForm: React.FC<SignUpFormProps>
       onError: (e) => setErrorMessage(e),
       onSuccess: (user) => {
         user.banned 
-          ? openConfirmEmailModal()
-          : openSignInModal();
+          ? setOpenModal(Modal.CONFIRM_EMAIL)
+          : setOpenModal(Modal.SIGN_IN);
       }
     });
   };
@@ -86,7 +82,6 @@ const SignUpForm: React.FC<SignUpFormProps>
 
       <PrimaryButton
         text="Create Account"
-        classes=""
         type="submit"
         disabled={isPending}
       />

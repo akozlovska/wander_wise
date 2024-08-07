@@ -2,7 +2,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { Maven_Pro } from "next/font/google";
-import { Header } from "@/src/components/organisms";
+import { Header, RootModal } from "@/src/components/organisms";
 import { QueryProvider, AuthProvider } from "@/src/providers";
 import { SITE_NAME } from "@/src/lib/constants";
 import "./globals.css";
@@ -51,6 +51,7 @@ export default function RootLayout({
         <QueryProvider>
           <AuthProvider>
             <Header />
+            <RootModal />
             {children}
           </AuthProvider>
         </QueryProvider>

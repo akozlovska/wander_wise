@@ -1,17 +1,11 @@
 'use client';
 
 import { useState } from "react";
-import { AnimatePresence } from "framer-motion";
 import { twMerge } from "tailwind-merge";
 import { IconButton, Stars } from "@/src/components/molecules";
 import { Icons, TextBase, Heading5, TextMedium } from "@/src/components/atoms";
-import { 
-  DeleteReviewModal, 
-  CreateReportModal,
-  EditReviewModal
-} from "@/src/components/organisms";
-import { IComment } from "@/src/services";
-import { useUser } from "@/src/store/user";
+import { IComment, Modal } from "@/src/services";
+import { useUser, useModal } from "@/src/store";
 
 interface ReviewCardProps {
   review: IComment;
@@ -19,11 +13,15 @@ interface ReviewCardProps {
 
 const ReviewCard: React.FC<ReviewCardProps> = ({ review }) => {
   const stars = new Array(5).fill(0).fill(1, 0, review.stars);
-  const [isDeleteReviewModal, setIsDeleteReviewModal] = useState(false);
-  const [isReportReviewModal, setIsReportReviewModal] = useState(false);
-  const [isEditReviewModal, setIsEditReviewModal] = useState(false);
+  const { setOpenModal } = useModal();
   const { user } = useUser();
   const isReviewedByUser = user?.pseudonym === review.author;
+
+  const handleReport = () => {
+    user
+      ? setOpenModal(Modal.CREATE_REPORT, { type: 'Comment', comment: review })
+      : setOpenModal(Modal.SIGN_UP);
+  };
 
   const [isFullReview, setIsFullReview] = useState(review.text.length <= 500);
 
@@ -47,19 +45,21 @@ const ReviewCard: React.FC<ReviewCardProps> = ({ review }) => {
               <IconButton
                 icon={<Icons.edit className="h-6 w-6 text-gray-70" />}
                 classes="p-0"
-                onClick={() => setIsEditReviewModal(true)}
+                onClick={() => setOpenModal(Modal.EDIT_REVIEW, { review })}
               />
               <IconButton
                 icon={<Icons.delete className="h-6 w-6 text-gray-70" />}
                 classes="p-0"
-                onClick={() => setIsDeleteReviewModal(true)}
+                onClick={() => setOpenModal(
+                  Modal.DELETE_REVIEW, { commentId: review.id }
+                )}
               />
             </>
           ) : (
             <IconButton 
               icon={<Icons.report className="h-6 w-6 text-gray-70" />} 
               classes="p-0"
-              onClick={() => setIsReportReviewModal(true)}
+              onClick={handleReport}
             />
           )}
         </div>
@@ -86,33 +86,6 @@ const ReviewCard: React.FC<ReviewCardProps> = ({ review }) => {
           />
         </button>
       )}
-      
-      <AnimatePresence>
-        {isDeleteReviewModal && (
-          <DeleteReviewModal 
-            key="deleteReviewModal"
-            commentId={review.id} 
-            onClose={() => setIsDeleteReviewModal(false)} 
-          />
-        )}
-
-        {isEditReviewModal && (
-          <EditReviewModal 
-            key="editReviewModal"
-            review={review} 
-            onClose={() => setIsEditReviewModal(false)} 
-          />
-        )}
-
-        {isReportReviewModal && (
-          <CreateReportModal 
-            key="createReportModal"
-            onClose={() => setIsReportReviewModal(false)}
-            type="Comment"
-            comment={review}
-          />
-        )}
-      </AnimatePresence>
     </article>
   );
 };

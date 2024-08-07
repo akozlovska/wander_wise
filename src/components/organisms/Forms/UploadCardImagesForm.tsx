@@ -9,10 +9,10 @@ import { uploadCardImagesSchema } from "@/src/validation";
 import { ErrorText } from "@/src/components/atoms";
 import { MultipleFileInput, PrimaryButton } from "@/src/components/molecules";
 import { Routes } from "@/src/lib/constants";
+import { useModal } from "@/src/store";
 
 interface UploadCardImagesFormProps {
   cardId: number | null,
-  closeModal?: () => void;
 }
 
 interface UploadCardImagesFormData {
@@ -20,7 +20,8 @@ interface UploadCardImagesFormData {
 }
 
 const UploadCardImagesForm: React.FC<UploadCardImagesFormProps> 
-= ({ cardId, closeModal }) => {
+= ({ cardId }) => {
+  const { openModal, closeModal } = useModal();
   const { push } = useRouter();
   const [errorMessage, setErrorMessage] = useNormalizedError();
   
@@ -54,7 +55,7 @@ const UploadCardImagesForm: React.FC<UploadCardImagesFormProps>
         {
           onError: (e) => setErrorMessage(e),
           onSuccess: () => {
-            if (closeModal) {
+            if (openModal) {
               closeModal();
             } else {
               push(Routes.TRIP(cardId));

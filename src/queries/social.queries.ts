@@ -4,7 +4,7 @@ import {
   IUpdateSocial,
   socialService
 } from "@/src/services";
-import { useUser } from "@/src/store/user";
+import { useUser } from "@/src/store";
 
 export function useAddSocial() {
   const user = useUser((state) => state.user);

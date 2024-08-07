@@ -2,30 +2,14 @@ import { memo } from "react";
 import { ModalTemplate, SignInForm } from "@/src/components/organisms";
 import { Heading, Heading4, TextBase, Divider } from "@/src/components/atoms";
 import { UnstyledButton } from "@/src/components/molecules";
+import { useModal } from "@/src/store";
+import { Modal } from "@/src/services";
 
-interface SignInModalProps {
-  onClose: () => void;
-  onOpenSignUp: () => void;
-  onOpenRestorePassword: () => void;
-}
-
-const SignInModal: React.FC<SignInModalProps> = ({
-  onClose,
-  onOpenSignUp,
-  onOpenRestorePassword,
-}) => {
-  const handleSignUpClick = () => {
-    onClose();
-    onOpenSignUp();
-  };
-
-  const handleRestorePasswordClick = () => {
-    onClose();
-    onOpenRestorePassword();
-  };
+const SignInModal = () => {
+  const { setOpenModal } = useModal();
 
   return (
-    <ModalTemplate onClose={onClose}>
+    <ModalTemplate>
       <div className="flex gap-2">
         <Heading text="Welcome back to " font="normal" />
         <Heading text="Wander Wise" font="medium" classes="font-maven" />
@@ -38,10 +22,7 @@ const SignInModal: React.FC<SignInModalProps> = ({
 
       <Divider classes="mb-2" />
 
-      <SignInForm 
-        closeModal={onClose} 
-        openRestorePasswordModal={handleRestorePasswordClick} 
-      />
+      <SignInForm />
 
       <Divider classes="mb-2" />
 
@@ -52,7 +33,7 @@ const SignInModal: React.FC<SignInModalProps> = ({
         />
         <UnstyledButton
           text="Create account"
-          onClick={handleSignUpClick}
+          onClick={() => setOpenModal(Modal.SIGN_UP)}
         />
       </div>
     </ModalTemplate>

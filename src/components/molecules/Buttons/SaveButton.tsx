@@ -7,9 +7,9 @@ import {
   useSaveCard 
 } from "@/src/queries";
 import { PrimaryButton } from "@/src/components/molecules";
-import { useUser } from "@/src/store/user";
+import { useUser, useModal } from "@/src/store";
 import { selectSavedCards } from "@/src/lib/collectionSelectors";
-import { ICollection } from "@/src/services";
+import { ICollection, Modal } from "@/src/services";
 
 interface SaveButtonProps {
   cardId: number,
@@ -17,6 +17,7 @@ interface SaveButtonProps {
 
 const SaveButton: React.FC<SaveButtonProps> = ({ cardId }) => {
   const { user } = useUser();
+  const { setOpenModal } = useModal();
   const { mutate: save } = useSaveCard();
   const { mutate: removeFromSaved } = useRemoveCardFromSaved();
 
@@ -28,17 +29,21 @@ const SaveButton: React.FC<SaveButtonProps> = ({ cardId }) => {
   [savedCollection, cardId]);
   
   const handleClick = useCallback(() => {
-    isCardSavedByUser
-      ? removeFromSaved(cardId)
-      : save(cardId);
-  }, [isCardSavedByUser, cardId, save, removeFromSaved]);
+    if (user) {
+      isCardSavedByUser
+        ? removeFromSaved(cardId)
+        : save(cardId);
+    } else {
+      setOpenModal(Modal.SIGN_UP);
+    }
+
+  }, [user, isCardSavedByUser, cardId, save, removeFromSaved, setOpenModal]);
 
   return (
     <PrimaryButton
       text={isCardSavedByUser ? 'Remove from saved' : 'Save'}
       onClick={handleClick}
       type="button"
-      disabled={!user}
     />
   );
 };

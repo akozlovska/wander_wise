@@ -3,18 +3,14 @@ import { ModalTemplate, EditReviewForm } from "@/src/components/organisms";
 import { IComment } from "@/src/services";
 
 interface EditReviewModalProps {
-  onClose: () => void;
   review: IComment
 }
 
 const EditReviewModal: React.FC<EditReviewModalProps> 
-= ({ onClose, review }) => {
+= ({ review }) => {
   return (
-    <ModalTemplate 
-      onClose={onClose}
-      title="Edit your comment"
-    >
-      <EditReviewForm closeModal={onClose} review={review} />
+    <ModalTemplate title="Edit your comment">
+      <EditReviewForm review={review} />
     </ModalTemplate>
   );
 };

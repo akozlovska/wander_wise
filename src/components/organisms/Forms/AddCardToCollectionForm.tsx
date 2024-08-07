@@ -14,11 +14,11 @@ import {
 } from "@/src/components/molecules";
 import { ICollection } from "@/src/services";
 import { addCardToCollectionSchema } from "@/src/validation";
+import { useModal } from "@/src/store";
 
 interface AddCardToCollectionFormProps {
   cardId: number,
   collections: ICollection[],
-  closeModal: () => void;
 }
 
 interface AddCardToCollectionFormData {
@@ -26,7 +26,9 @@ interface AddCardToCollectionFormData {
 }
 
 const AddCardToCollectionForm: React.FC<AddCardToCollectionFormProps> 
-= ({ cardId, collections, closeModal }) => {
+= ({ cardId, collections }) => {
+  const { closeModal } = useModal();
+
   const collectionsWithoutCard = useMemo(() => 
     collections.filter(c =>! c.cardDtos.find(card => card.id === cardId)), 
   [collections, cardId]);

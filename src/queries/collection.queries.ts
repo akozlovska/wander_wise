@@ -4,7 +4,7 @@ import {
   IUpdateCollection,
   collectionService,
 } from "@/src/services";
-import { useUser } from "@/src/store/user";
+import { useUser } from "@/src/store";
 
 export function useGetCollection(collectionId: number) {
   return useQuery({

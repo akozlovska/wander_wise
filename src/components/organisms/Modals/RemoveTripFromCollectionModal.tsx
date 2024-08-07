@@ -10,16 +10,17 @@ import {
   useUpdateCollection 
 } from "@/src/queries";
 import { useNormalizedError } from "@/src/hooks";
+import { useModal } from "@/src/store";
 
 interface RemoveTripFromCollectionModalProps {
   trip: ICard;
   collectionId: number;
-  onClose: () => void;
 }
 
 const RemoveTripFromCollectionModal: React.FC<
 RemoveTripFromCollectionModalProps
-> = ({ trip, collectionId, onClose }) => {
+> = ({ trip, collectionId }) => {
+  const { closeModal } = useModal();
   const { isPending, mutate } = useUpdateCollection();
   const [errorMessage, setErrorMessage] = useNormalizedError();
   const { data: collection } = useGetCollection(collectionId);
@@ -36,13 +37,13 @@ RemoveTripFromCollectionModalProps
       
       mutate(data, { 
         onError: (e) => setErrorMessage(e),
-        onSuccess: onClose,
+        onSuccess: closeModal,
       });
     }
   };
 
   return (
-    <ModalTemplate onClose={onClose}>
+    <ModalTemplate>
       <h1 className="text-4xl font-normal leading-normal">
         Remove “
         <span className="font-medium">{trip.name}</span>
@@ -63,7 +64,7 @@ RemoveTripFromCollectionModalProps
         />
         <RoundedButton
           text="Cancel"
-          onClick={onClose}
+          onClick={closeModal}
           style="light"
         />
       </div>

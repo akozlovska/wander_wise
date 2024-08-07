@@ -4,26 +4,21 @@ import { memo, useState } from "react";
 import { ModalTemplate, RestorePasswordForm } from "@/src/components/organisms";
 import { UnstyledButton } from "@/src/components/molecules";
 import { Divider } from "@/src/components/atoms";
+import { useModal } from "@/src/store";
+import { Modal } from "@/src/services";
 
 interface RestorePasswordModalProps {
-  onClose: () => void;
-  onOpenSignIn?: () => void;
+  isOpenSignIn?: boolean;
 }
 
 const RestorePasswordModal: React.FC<RestorePasswordModalProps> = ({
-  onClose,
-  onOpenSignIn,
+  isOpenSignIn = false,
 }) => {
   const [isSubmitted, setIsSubmitted] = useState(false);
-
-  const handleSignInClick = () => {
-    onClose();
-    onOpenSignIn && onOpenSignIn();
-  };
+  const { setOpenModal } = useModal();
 
   return (
     <ModalTemplate 
-      onClose={onClose}
       title="Password assistance"
       subtitle={isSubmitted 
         ? "Your new password will be sent to your email 😉" 
@@ -33,11 +28,12 @@ const RestorePasswordModal: React.FC<RestorePasswordModalProps> = ({
       {isSubmitted ? (
         <>
           <Divider />
-          {onOpenSignIn && (
+          
+          {isOpenSignIn && (
             <UnstyledButton
               text="Sign in to your account"
               classes="font-semibold"
-              onClick={handleSignInClick}
+              onClick={() => setOpenModal(Modal.SIGN_IN)}
             />
           )}
         </>

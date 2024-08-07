@@ -1,22 +1,22 @@
 'use client';
 
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useParams, useRouter } from "next/navigation";
-import { AnimatePresence } from "framer-motion";
 import { Heading2, TextBase } from "@/src/components/atoms";
-import { EditCardForm, AddCardImagesModal } from "@/src/components/organisms";
+import { EditCardForm } from "@/src/components/organisms";
 import { useGetCardDetails } from "@/src/queries";
 import { Routes } from "@/src/lib/constants";
-import { useUser } from "@/src/store/user";
+import { useUser, useModal } from "@/src/store";
 import { StandardPageLayout } from "@/src/components/templates";
+import { Modal } from "@/src/services";
 
 const EditCardPage = () => {
+  const { setOpenModal } = useModal();
   const { id } = useParams();
   const cardId = +id;
   const { push } = useRouter();
   const { user } = useUser();
   const { data: card, isError } = useGetCardDetails(cardId);
-  const [isAddCardImagesModal, setIsAddCardImagesModal] = useState(false);
   const isCardCreatedByUser =  card && user && card.author === user.pseudonym;
 
   useEffect(() => {
@@ -31,7 +31,7 @@ const EditCardPage = () => {
       gap-6 self-center rounded-4xl bg-white px-10 py-12">
         <button
           type="button"
-          onClick={() => setIsAddCardImagesModal(true)}
+          onClick={() => setOpenModal(Modal.ADD_CARD_IMAGES, { cardId })}
           className="absolute right-5 top-5"
         >
           <TextBase
@@ -50,16 +50,6 @@ const EditCardPage = () => {
           <EditCardForm card={card} />
         )}
       </article>
-      
-      <AnimatePresence>
-        {(isAddCardImagesModal && id) && (
-          <AddCardImagesModal 
-            key="addCardImagesModal"
-            cardId={cardId} 
-            onClose={() => setIsAddCardImagesModal(false)} 
-          />
-        )}
-      </AnimatePresence>
     </StandardPageLayout>
   );
 };

@@ -9,7 +9,7 @@ import {
 import { AxiosError } from "axios";
 import { useRouter } from "next/navigation";
 import { deleteCookie } from "cookies-next";
-import { useUser } from "@/src/store/user";
+import { useUser } from "@/src/store";
 import { Routes } from "@/src/lib/constants";
 
 export function QueryProvider({children}: PropsWithChildren) {

@@ -32,6 +32,7 @@ const FilteredCardsSection: React.FC<FilteredCardsSectionProps>
 
   useEffect(() => {
     if (filterParams) {
+      setPage(0);
       setFilteredCards(getFilteredCards(cards, filterParams));
     } else {
       setFilteredCards(cards);
@@ -40,7 +41,7 @@ const FilteredCardsSection: React.FC<FilteredCardsSectionProps>
 
   return (
     <section 
-      className="flex min-h-full w-full flex-col items-center gap-8 px-10 py-8"
+      className="flex min-h-full w-full flex-col gap-8 px-10 py-8"
     >
       <div className="align-center flex w-full justify-between">
         <div className="flex items-center gap-2">
@@ -58,7 +59,10 @@ const FilteredCardsSection: React.FC<FilteredCardsSectionProps>
       </div>
 
       {displayedCards.length ? (
-        <>
+        <div 
+          className="flex w-full grow flex-col 
+          items-center justify-between gap-8"
+        >
           <Gallery cards={displayedCards} />
 
           {totalPages > 1 && (
@@ -68,7 +72,7 @@ const FilteredCardsSection: React.FC<FilteredCardsSectionProps>
               lastPage={totalPages - 1}
             />
           )}
-        </>
+        </div>
       ) : (
         <div className="m-auto text-center">
           <Heading4 

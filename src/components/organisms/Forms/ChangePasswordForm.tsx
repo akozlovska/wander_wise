@@ -4,7 +4,7 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useNormalizedError } from "@/src/hooks";
 import { useUpdatePassword } from "@/src/queries";
-import { IUpdatePassword } from "@/src/services";
+import { IUpdatePassword, Modal } from "@/src/services";
 import { changePasswordSchema } from "@/src/validation";
 import { ErrorText } from "@/src/components/atoms";
 import { 
@@ -12,16 +12,12 @@ import {
   PrimaryButton, 
   UnstyledButton 
 } from "@/src/components/molecules";
-
-interface ChangePasswordFormProps {
-  closeModal: () => void;
-  openRestorePasswordModal: () => void;
-}
+import { useModal } from "@/src/store";
 
 type ChangePasswordFormData = Omit<IUpdatePassword, 'userId'>;
 
-const ChangePasswordForm: React.FC<ChangePasswordFormProps> 
-= ({ closeModal, openRestorePasswordModal }) => {
+const ChangePasswordForm= () => {
+  const { closeModal, setOpenModal } = useModal();
   const [errorMessage, setErrorMessage] = useNormalizedError();
   const validationSchema = changePasswordSchema();
   const {
@@ -85,7 +81,7 @@ const ChangePasswordForm: React.FC<ChangePasswordFormProps>
 
       <UnstyledButton
         text="Forgot Password?"
-        onClick={openRestorePasswordModal}
+        onClick={() => setOpenModal(Modal.RESTORE_PASSWORD)}
         classes="mb-4 self-start font-medium 
         text-blue underline hover:text-[#0D00CC]"
       />

@@ -5,7 +5,7 @@ import {
   IUpdateComment,
   commentService,
 } from "@/src/services";
-import { useUser } from "@/src/store/user";
+import { useUser } from "@/src/store";
 
 export function useCreateComment() {
   const user = useUser((state) => state.user);

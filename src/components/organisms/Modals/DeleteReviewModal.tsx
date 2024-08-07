@@ -7,16 +7,16 @@ import { ErrorText } from "@/src/components/atoms";
 import { RoundedButton } from "@/src/components/molecules";
 import { useDeleteComment } from "@/src/queries";
 import { useNormalizedError } from "@/src/hooks";
+import { useModal } from "@/src/store";
 
 interface DeleteReviewModalProps {
-  onClose: () => void;
   commentId: number;
 }
 
 const DeleteReviewModal: React.FC<DeleteReviewModalProps> = ({
-  onClose,
   commentId,
 }) => {
+  const { closeModal } = useModal();
   const { id: cardId } = useParams();
   const { isPending, mutate } = useDeleteComment();
 
@@ -26,14 +26,13 @@ const DeleteReviewModal: React.FC<DeleteReviewModalProps> = ({
     if (cardId) {
       mutate({ commentId, cardId: +cardId }, { 
         onError: (e) => setErrorMessage(e),
-        onSuccess: onClose,
+        onSuccess: closeModal,
       });
     }
   };
 
   return (
     <ModalTemplate 
-      onClose={onClose}
       title="Delete your review?"
       subtitle="This action cannot be undone 🫣"
     >
@@ -46,7 +45,7 @@ const DeleteReviewModal: React.FC<DeleteReviewModalProps> = ({
         />
         <RoundedButton
           text="Cancel"
-          onClick={onClose}
+          onClick={closeModal}
           style="light"
         />
       </div>

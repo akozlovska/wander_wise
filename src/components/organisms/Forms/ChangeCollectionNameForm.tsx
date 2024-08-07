@@ -6,21 +6,17 @@ import { useParams } from "next/navigation";
 import { useNormalizedError } from "@/src/hooks";
 import { trimObjectFields } from "@/src/lib/helpers";
 import { useGetCollection, useUpdateCollection } from "@/src/queries";
-import { useUser } from "@/src/store/user";
 import { ErrorText } from "@/src/components/atoms";
 import { TextInput, PrimaryButton } from "@/src/components/molecules";
 import { changeCollectionNameSchema } from "@/src/validation";
-
-interface ChangeCollectionNameFormProps {
-  closeModal: () => void,
-}
+import { useModal, useUser } from "@/src/store";
 
 interface ChangeCollectionNameFormData {
   newName: string;
 }
 
-const ChangeCollectionNameForm: React.FC<ChangeCollectionNameFormProps> 
-= ({ closeModal }) => {
+const ChangeCollectionNameForm = () => {
+  const { closeModal } = useModal();
   const { user } = useUser();
   const [errorMessage, setErrorMessage] = useNormalizedError();
   const { id: collectionId } = useParams();

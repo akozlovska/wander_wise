@@ -1,7 +1,6 @@
 'use client';
 
-import { memo, useCallback, useState } from "react";
-import { AnimatePresence } from "framer-motion";
+import { memo, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
@@ -12,26 +11,25 @@ import {
   TextBase, 
   ErrorText,
 } from "@/src/components/atoms";
-import { useUser } from "@/src/store/user";
+import { useUser, useModal } from "@/src/store";
 import { useGetUserSocials, useLogout } from "@/src/queries";
 import { useNormalizedError } from "@/src/hooks";
 import { 
-  AddProfileImageModal, 
   ConfirmEmailButton 
 } from "@/src/components/organisms";
 import { Routes } from "@/src/lib/constants";
 import { IconButton, RoundedButton } from "@/src/components/molecules";
+import { Modal } from "@/src/services";
 
 const ProfileInfo: React.FC = () => {
   const { user } = useUser();
   const { push } = useRouter();
+  const { setOpenModal } = useModal();
 
   const [errorMessage, setErrorMessage] = useNormalizedError();
 
   const { data: userSocials } = useGetUserSocials();
   const { isPending, mutate } = useLogout();
-
-  const [isAddImageModal, setIsAddImageModal] = useState(false);
 
   const handleLogout = useCallback(() => {
     mutate(undefined, {
@@ -59,7 +57,7 @@ const ProfileInfo: React.FC = () => {
 
         <IconButton 
           icon={<Icons.edit className="h-4 w-4 text-white" />} 
-          onClick={() => setIsAddImageModal(true)}
+          onClick={() => setOpenModal(Modal.ADD_PROFILE_IMAGE)}
           classes="p-2 absolute bottom-0 right-1/3 bg-gray-80 
           rounded-full border border-white"
         />
@@ -167,15 +165,6 @@ const ProfileInfo: React.FC = () => {
       </div>
 
       {errorMessage && <ErrorText errorText={errorMessage} />}
-
-      <AnimatePresence>
-        {isAddImageModal && (
-          <AddProfileImageModal
-            key="addProfileImageModal"
-            onClose={() => setIsAddImageModal(false)}
-          />
-        )}
-      </AnimatePresence>
     </article>
   );
 };

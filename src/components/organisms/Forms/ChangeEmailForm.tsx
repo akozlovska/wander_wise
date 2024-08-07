@@ -4,17 +4,14 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useNormalizedError } from '@/src/hooks';
 import { useRequestUpdateEmail } from '@/src/queries';
-import { IEmail } from '@/src/services';
+import { IEmail, Modal } from '@/src/services';
 import { ErrorText } from '@/src/components/atoms';
 import { PrimaryButton, TextInput } from '@/src/components/molecules';
 import { changeEmailSchema } from '@/src/validation';
+import { useModal } from '@/src/store';
 
-interface ChangeEmailFormProps {
-  openConfirmEmailModal: () => void;
-}
-
-const ChangeEmailForm: React.FC<ChangeEmailFormProps> 
-= ({ openConfirmEmailModal }) => {
+const ChangeEmailForm = () => {
+  const { setOpenModal } = useModal();
   const [errorMessage, setErrorMessage] = useNormalizedError();
   const validationSchema = changeEmailSchema();
 
@@ -34,7 +31,7 @@ const ChangeEmailForm: React.FC<ChangeEmailFormProps>
   const onSubmit: SubmitHandler<IEmail> = (data) => {
     mutate(data.email, {
       onError: (e) => setErrorMessage(e),
-      onSuccess: openConfirmEmailModal,
+      onSuccess: () => setOpenModal(Modal.CONFIRM_EMAIL),
     });
   };
 

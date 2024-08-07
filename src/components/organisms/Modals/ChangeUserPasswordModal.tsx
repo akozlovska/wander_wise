@@ -2,23 +2,12 @@ import { memo } from "react";
 import { Heading2 } from "@/src/components/atoms";
 import { ModalTemplate, ChangePasswordForm } from "@/src/components/organisms";
 
-interface ChangeUserPasswordModalProps {
-  onClose: () => void;
-  onOpenRestorePasswordModal: () => void;
-}
-
-const ChangeUserPasswordModal: React.FC<ChangeUserPasswordModalProps> = ({
-  onClose,
-  onOpenRestorePasswordModal,
-}) => {
+const ChangeUserPasswordModal = () => {
   return (
-    <ModalTemplate onClose={onClose}>
+    <ModalTemplate>
       <Heading2 text="Change password" font="semibold" classes="self-start"/>
 
-      <ChangePasswordForm 
-        closeModal={onClose} 
-        openRestorePasswordModal={onOpenRestorePasswordModal} 
-      />
+      <ChangePasswordForm />
     </ModalTemplate>
   );
 };

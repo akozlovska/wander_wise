@@ -39,6 +39,7 @@ export { default as DeleteCardModal } from "./Modals/DeleteCardModal";
 export { default as DeleteCollectionModal } from "./Modals/DeleteCollectionModal";
 export { default as RenameCollectionModal} from "./Modals/RenameCollectionModal";
 export { default as EmptyFallbackModal} from "./Modals/EmptyFallbackModal";
+export { default as RootModal } from "./Modals/RootModal";
 
 export { default as SignInForm } from "./Forms/SignInForm";
 export { default as SearchCardsForm } from "./Forms/SearchCardsForm";

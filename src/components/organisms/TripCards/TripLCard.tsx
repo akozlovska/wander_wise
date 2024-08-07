@@ -1,7 +1,5 @@
 'use client';
 
-import { useState } from "react";
-import { AnimatePresence } from "framer-motion";
 import { useRouter } from "next/navigation";
 import { 
   Divider, 
@@ -18,12 +16,11 @@ import {
 import { 
   CardImagesSection, 
   Tabs, 
-  CreateReportModal 
 } from "@/src/components/organisms";
 import { useCopyUrlToClipboard } from "@/src/hooks";
 import { Routes } from "@/src/lib/constants";
-import { ICard, ICardTabs } from "@/src/services";
-import { useUser } from "@/src/store/user";
+import { ICard, ICardTabs, Modal } from "@/src/services";
+import { useUser, useModal } from "@/src/store";
 
 interface TripLCardProps {
   card: ICard;
@@ -35,11 +32,16 @@ const TripLCard: React.FC<TripLCardProps> = ({ card }) => {
     'Why this place?': card.whyThisPlace,
     'Map': { latitude: card.latitude, longitude: card.longitude },
   };
-
+  const { setOpenModal } = useModal();
   const [isCopied, copy] = useCopyUrlToClipboard(Routes.TRIP(card.id));
-  const [isReportCardModal, setIsReportCardModal] = useState(false);
   const { user } = useUser();
   const { push } = useRouter();
+
+  const handleReport = () => {
+    user
+      ? setOpenModal(Modal.CREATE_REPORT, { type: 'Card' })
+      : setOpenModal(Modal.SIGN_UP);
+  };
 
   const isCardCreatedByUser = card.author === user?.pseudonym;
 
@@ -63,7 +65,7 @@ const TripLCard: React.FC<TripLCardProps> = ({ card }) => {
             {isCopied && (
               <span 
                 className="absolute bottom-[44px] right-0 flex 
-              items-center  justify-center rounded-2xl bg-white px-6 py-2"
+                items-center  justify-center rounded-2xl bg-white px-6 py-2"
               >
                 <Heading5 
                   text="Copied to clipboard!" 
@@ -98,8 +100,7 @@ const TripLCard: React.FC<TripLCardProps> = ({ card }) => {
               classes="bg-transparent border border-error 
               text-error rounded-full 
               disabled:text-gray-50 disabled:border-gray-50"
-              onClick={() => setIsReportCardModal(true)}
-              disabled={!user}
+              onClick={handleReport}
             />
 
             {isCardCreatedByUser && (
@@ -136,16 +137,6 @@ const TripLCard: React.FC<TripLCardProps> = ({ card }) => {
           <CardImagesSection images={card.imageLinks} />
         </div>
       </div>
-      
-      <AnimatePresence>
-        {isReportCardModal && (
-          <CreateReportModal 
-            key="createReportModal"
-            type="Card" 
-            onClose={() => setIsReportCardModal(false)} 
-          />
-        )}
-      </AnimatePresence>
     </article>
   );
 };

@@ -9,7 +9,7 @@ import {
   useGetUserSocials, 
   useUpdateSocial 
 } from "@/src/queries";
-import { useUser } from "@/src/store/user";
+import { useUser } from "@/src/store";
 import { socialLinkSchema } from "@/src/validation";
 import { ErrorText } from "@/src/components/atoms";
 import { TextInput, UnstyledButton } from "@/src/components/molecules";

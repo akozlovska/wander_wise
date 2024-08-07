@@ -9,7 +9,7 @@ import { editProfileSchema } from "@/src/validation";
 import { trimObjectFields } from "@/src/lib/helpers";
 import { ErrorText } from "@/src/components/atoms";
 import { useUpdateUserInfo } from "@/src/queries";
-import { useUser } from "@/src/store/user";
+import { useUser } from "@/src/store";
 import { useNormalizedError } from "@/src/hooks";
 import { 
   PrimaryButton, 

@@ -13,14 +13,12 @@ import {
   TextAreaInput, 
   StarsInput, 
 } from "@/src/components/molecules";
-
-interface CreateReviewFormProps {
-  closeModal: () => void,
-}
+import { useModal } from "@/src/store";
 
 type CreateReviewFormData = Omit<ICreateComment, 'cardId'>;
 
-const CreateReviewForm: React.FC<CreateReviewFormProps> = ({ closeModal }) => {
+const CreateReviewForm = () => {
+  const { closeModal } = useModal();
   const { id } = useParams();
   const [errorMessage, setErrorMessage] = useNormalizedError();
   const validationSchema = reviewSchema();
